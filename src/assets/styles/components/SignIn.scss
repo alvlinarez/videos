@@ -1,0 +1,125 @@
+.signIn {
+  background-image: linear-gradient(#21c08b, #8f57fd);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0px 30px;
+  min-height: calc(100vh - 200px); /* El ancho será igual al tamaño de toodo el height menos 200px (100px del header + 100px del footer) */
+}
+
+.signIn__container {
+  background-color: rgba(255,255,255,0.1);
+  border: 2px solid #ffffff;
+  border-radius: 40px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-height: 800px;
+  padding: 60px 68px 40px;
+  width: 450px;
+}
+
+.signIn__container--form {
+  display: flex;
+  flex-direction: column;
+}
+
+.signIn__container--form label {
+  font-size: 14px;
+}
+
+.signIn__container--forgot-password {
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.signIn__container--forgot-password a {
+  color: #ffffff;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.signIn__container--forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.signIn__container--social-media > div {
+  align-items: center;
+  display: flex;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.signIn__container--social-media > div > img {
+  margin-right: 10px;
+  width: 30px;
+}
+
+.signIn__container--social-media > div > span:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.signIn__container--signUp {
+  font-size: 14px;
+}
+
+.signIn__container--signUp a {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.signIn__container--signUp a:hover {
+  text-decoration: underline;
+}
+
+.input {
+  background-color: transparent;
+  border-left: 0px;
+  border-top: 0px;
+  border-right: 0px;
+  border-bottom: 2px solid #ffffff;
+  font-family: 'Muli', sans-serif;
+  font-size: 16px;
+  margin-bottom: 20px;
+  padding: 0px 20px;
+  outline: none;
+  height: 50px;
+  color: #ffffff;
+}
+
+::placeholder {
+  color: #ffffff;
+}
+
+.button {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 25px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: 'Muli', sans-serif;
+  height: 50px;
+  letter-spacing: 1px;
+  margin: 10px 0px;
+}
+
+@media only screen and (max-width: 600px) {
+  .signIn__container {
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+    width: 100%;
+    box-shadow: none;
+    min-height: 600px;
+  }
+}
