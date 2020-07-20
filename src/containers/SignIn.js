@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import '../assets/styles/components/SignIn.scss';
 import googleIcon from '../assets/static/google-icon.png';
-import twitterIcon from '../assets/static/twitter-icon.png';
+import facebookIcon from '../assets/static/facebook-icon.png';
 import Header from '../components/Header';
 
 const SignIn = () => {
@@ -55,8 +55,8 @@ const SignIn = () => {
               <span>Sign In with Google</span>
             </div>
             <div>
-              <img src={twitterIcon} alt="Twitter-Icon" />
-              <span>Sign In with Twitter</span>
+              <img src={facebookIcon} alt="Twitter-Icon" />
+              <span>Sign In with Facebook</span>
             </div>
           </section>
           <p className="signIn__container--signUp">
