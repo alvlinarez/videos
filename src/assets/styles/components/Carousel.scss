@@ -1,30 +1,116 @@
-.carousel {
-  overflow: scroll;
-  /* Custom CSS */
-  overflow-x: hidden;
-  overflow-y: hidden;
-  /* End Custom CSS */
-  padding-left: 30px;
+.swiper-container {
   width: 100%;
-  position: relative;
+  height: 100%;
 }
 
-.carousel__container {
-  transition: 450ms -webkit-transform;
-  transition: 450ms transform;
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.categories-container .swiper-image {
+  width: 200px;
+  height: 250px;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.categories-container img:hover {
+  cursor: pointer;
+}
+
+.categories-container img:active {
+  cursor: grabbing;
+}
+
+.categories-container .swiper-wrapper {
   transition: 450ms transform, 450ms -webkit-transform;
   font-size: 0;
   white-space: nowrap;
-  margin: 70px 0px;
+  margin-top: 30px !important;
   padding-bottom: 10px;
 }
 
-.carousel__container:hover .carousel-item {
+.categories-container .swiper-slide {
+  background: none;
+  height: 250px;
+  border-radius: 20px;
+  overflow: hidden;
+  display: inline-block;
+  cursor: pointer;
+  transition: 450ms all;
+  -webkit-transform-origin: center left;
+  transform-origin: center left;
+  position: relative;
+  font-size: 20px;
+}
+
+.categories-container .swiper-slide:last-of-type {
+  height: 250px;
+  border-radius: 20px;
+  overflow: hidden;
+  display: inline-block;
+  cursor: pointer;
+  transition: 450ms all;
+  -webkit-transform-origin: 100% 50%;
+  transform-origin: 100% 50%;
+  position: relative;
+  font-size: 20px;
+}
+
+.categories-container .swiper-slide:active {
+  cursor: grabbing;
+}
+
+.categories-container .swiper-slide:hover ~ .swiper-slide {
+  -webkit-transform: translate3d(50px, 0, 0);
+  transform: translate3d(50px, 0, 0);
+}
+
+.categories-container .swiper-wrapper {
+  height: 75%;
+}
+
+.categories-container .swiper-wrapper:hover .swiper-slide {
   opacity: 0.3;
 }
 
-.carousel__container:hover .carousel-item:hover {
-  -webkit-transform: scale(1.5);
-  transform: scale(1.5);
+.categories-container .swiper-container:hover .swiper-slide:hover {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
   opacity: 1;
+  z-index: 9999;
+}
+
+
+.categories-container .swiper-slide:hover .carousel-item__details {
+  opacity: 1;
+}
+
+.categories-container .swiper-scrollbar-drag {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  background: #fff;
+  border-radius: 10px;
+  left: 0;
+  top: 0;
+}
+
+.categories-container .swiper-scrollbar-drag:hover {
+  cursor: pointer;
+}
+
+.categories-container .swiper-scrollbar-drag:active {
+  cursor: grabbing;
 }
