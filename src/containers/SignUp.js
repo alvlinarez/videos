@@ -1,15 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 // Dispatch
 import { useSelector, useDispatch } from 'react-redux';
+// Action
+import { signUpAction } from '../actions/authActions';
 // Form
 import { useFormik } from 'formik';
-
-import Header from '../components/Header';
-import '../assets/styles/components/SignUp.scss';
 import * as yup from 'yup';
-import { signUpAction } from '../actions/authActions';
+// Components
+import { isAuth } from '../utils/auth';
+import Header from '../components/Header';
 import Spinner from '../components/Spinner';
+import '../assets/styles/components/SignUp.scss';
 
 const SignUp = (props) => {
   const { history } = props;
@@ -40,6 +42,7 @@ const SignUp = (props) => {
 
   return (
     <>
+      {isAuth() && <Redirect to={'/'} />}
       <Header isAuth />
       <section className="signUp">
         <section className="signUp__container">

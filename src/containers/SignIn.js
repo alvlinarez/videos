@@ -1,20 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 // Dispatch
 import { useSelector, useDispatch } from 'react-redux';
+// Actions
+import { signInAction } from '../actions/authActions';
 // Form
 import { useFormik } from 'formik';
 // Validator
 import * as yup from 'yup';
-// Actions
-import { signInAction } from '../actions/authActions';
 // Components
+import { isAuth } from '../utils/auth';
+import Header from '../components/Header';
 import Spinner from '../components/Spinner';
 
 import '../assets/styles/components/SignIn.scss';
 import googleIcon from '../assets/static/google-icon.png';
 import facebookIcon from '../assets/static/facebook-icon.png';
-import Header from '../components/Header';
 
 const SignIn = (props) => {
   const { history } = props;
@@ -39,6 +41,7 @@ const SignIn = (props) => {
 
   return (
     <>
+      {isAuth() && <Redirect to={'/'} />}
       <Header isAuth />
       <section className="signIn">
         <section className="signIn__container">

@@ -6,14 +6,14 @@ import {
   SIGN_OUT,
   LOADING
 } from '../types/authTypes';
+import { getCookie } from '../utils/auth';
 
 const initialState = {
-  authenticated: null,
   error: null,
   message: null,
   loading: false,
-  token: null,
-  user: null
+  token: getCookie('token') || null,
+  user: localStorage.getItem('user')
 };
 
 export default (state = initialState, action) => {
@@ -26,7 +26,6 @@ export default (state = initialState, action) => {
     case SIGN_IN_SUCCESS:
       return {
         ...state,
-        authenticated: true,
         user: action.payload.user,
         token: action.payload.token,
         error: null,
@@ -42,7 +41,6 @@ export default (state = initialState, action) => {
     case SIGN_OUT:
       return {
         ...state,
-        authenticated: null,
         token: null,
         user: null,
         loading: false,
