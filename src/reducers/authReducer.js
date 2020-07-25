@@ -1,8 +1,16 @@
-import { SIGN_IN, SIGN_IN_ERROR, SIGN_OUT, LOADING } from '../types/authTypes';
+import {
+  SIGN_IN_SUCCESS,
+  SIGN_IN_ERROR,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_ERROR,
+  SIGN_OUT,
+  LOADING
+} from '../types/authTypes';
 
 const initialState = {
-  authenticated: false,
+  authenticated: null,
   error: null,
+  message: null,
   loading: false,
   token: null,
   user: null
@@ -15,7 +23,7 @@ export default (state = initialState, action) => {
         ...state,
         loading: true
       };
-    case SIGN_IN:
+    case SIGN_IN_SUCCESS:
       return {
         ...state,
         authenticated: true,
@@ -23,6 +31,12 @@ export default (state = initialState, action) => {
         token: action.payload.token,
         error: null,
         loading: false
+      };
+    case SIGN_UP_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        message: action.payload
       };
     case SIGN_OUT:
       return {
@@ -32,6 +46,7 @@ export default (state = initialState, action) => {
         user: null,
         loading: false
       };
+    case SIGN_UP_ERROR:
     case SIGN_IN_ERROR:
       return {
         ...state,

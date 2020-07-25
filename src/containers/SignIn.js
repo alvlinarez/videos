@@ -1,25 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+// Dispatch
+import { useSelector, useDispatch } from 'react-redux';
+// Form
+import { useFormik } from 'formik';
+// Validator
+import * as yup from 'yup';
+// Actions
+import { signInAction } from '../actions/authActions';
+// Components
+import Spinner from '../components/Spinner';
 
 import '../assets/styles/components/SignIn.scss';
 import googleIcon from '../assets/static/google-icon.png';
 import facebookIcon from '../assets/static/facebook-icon.png';
 import Header from '../components/Header';
 
-const SignIn = () => {
-  const [user, setUser] = useState({ email: '', password: '' });
+const SignIn = (props) => {
+  const { history } = props;
+  const dispatch = useDispatch();
+  const error = useSelector((state) => state.auth.error);
+  const authenticated = useSelector((state) => state.auth.authenticated);
+  const loading = useSelector((state) => state.auth.loading);
 
-  const handleInput = (e) => {
-    setUser({
-      ...user,
-      [e.target.name]: e.target.value
-    });
-  };
+  useEffect(() => {
+    if (authenticated) {
+      history.push('/');
+    }
+  }, [authenticated]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(user);
-  };
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: ''
+    },
+    validationSchema: yup.object({
+      email: yup.string().email('Email invalid').required('Email is required'),
+      password: yup.string().required('Password is required')
+      //.min(6, 'Password must contain at least 6 characters')
+    }),
+    onSubmit: (values) => {
+      dispatch(signInAction(values));
+    }
+  });
 
   return (
     <>
@@ -27,24 +50,50 @@ const SignIn = () => {
       <section className="signIn">
         <section className="signIn__container">
           <h2>Sign In</h2>
-          <form className="signIn__container--form" onSubmit={handleSubmit}>
+          <form
+            className="signIn__container--form"
+            onSubmit={formik.handleSubmit}
+          >
             <input
               name="email"
               className="input"
               type="text"
               placeholder="Email"
-              onChange={handleInput}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
             />
+            {formik.touched.email && formik.errors.email && (
+              <div className="input__error">
+                <p>{formik.errors.email}</p>
+              </div>
+            )}
             <input
               name="password"
               className="input"
               type="password"
               placeholder="Password"
-              onChange={handleInput}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
             />
-            <button className="button" type="submit">
-              Sign In
-            </button>
+            {formik.touched.password && formik.errors.password && (
+              <div className="input__error">
+                <p>{formik.errors.password}</p>
+              </div>
+            )}
+            {error && (
+              <div className="input__error">
+                <p>{error}</p>
+              </div>
+            )}
+            {loading ? (
+              <Spinner />
+            ) : (
+              <button className="button" type="submit">
+                Sign In
+              </button>
+            )}
             <div className="signIn__container--forgot-password">
               <a href="/">Forgot your password?</a>
             </div>

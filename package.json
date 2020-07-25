@@ -19,6 +19,9 @@
   "homepage": "https://github.com/alvarolg10/alg-videos#readme",
   "dependencies": {
     "axios": "0.19.2",
+    "dotenv": "8.2.0",
+    "formik": "2.1.5",
+    "js-cookie": "2.2.1",
     "md5": "2.2.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -26,7 +29,8 @@
     "react-router-dom": "5.2.0",
     "redux": "4.0.5",
     "redux-thunk": "2.3.0",
-    "swiper": "6.0.4"
+    "swiper": "6.0.4",
+    "yup": "0.29.1"
   },
   "devDependencies": {
     "@babel/core": "7.10.5",
