@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { signOutAction } from '../actions/authActions';
 
 import '../assets/styles/components/Header.scss';
 import logo from '../assets/static/logo-video.png';
@@ -7,14 +9,13 @@ import gravatar from '../utils/gravatar';
 import userIcon from '../assets/static/user-icon.png';
 
 const Header = (props) => {
-  const { isAuth } = props;
+  const { isAuth } = props; // if page is sign in or sign up to add class
   const headerClass = isAuth ? 'isAuth' : '';
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
 
-  const handleSignOut = (e) => {};
-  const hasUser = false;
-  const user = {
-    name: 'Alvaro Linarez',
-    email: 'alvarolinarez9@gmail.com'
+  const handleSignOut = (e) => {
+    dispatch(signOutAction());
   };
 
   return (
@@ -25,15 +26,15 @@ const Header = (props) => {
       {!isAuth && (
         <div className="header__menu">
           <div className="header__menu--profile">
-            {hasUser ? (
+            {user ? (
               <img src={gravatar(user.email)} alt={user.email} />
             ) : (
-              <img src={userIcon} alt="" />
+              <img src={userIcon} alt="user-icon" />
             )}
             <p>Profile</p>
           </div>
           <ul>
-            {hasUser ? (
+            {user ? (
               <>
                 <li>
                   <a href="/">{user.name}</a>
