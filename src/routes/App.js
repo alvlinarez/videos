@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from '../store';
 import Layout from '../components/Layout';
+import ScrollToTop from '../components/ScrollToTop';
 import Home from '../containers/Home';
 import SignIn from '../containers/SignIn';
 import SignUp from '../containers/SignUp';
@@ -13,6 +14,7 @@ import '../assets/styles/App.scss';
 export const App = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Provider store={store}>
         <Layout>
           <Switch>

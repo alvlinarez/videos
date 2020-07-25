@@ -9,7 +9,7 @@ import {
 import { authenticate, signOut } from '../utils/auth';
 import { axiosClient } from '../config/axios';
 
-export const signInAction = ({ email, password }) => {
+export const signInAction = ({ email, password }, history) => {
   return async (dispatch) => {
     dispatch({
       type: LOADING
@@ -36,6 +36,7 @@ export const signInAction = ({ email, password }) => {
           type: SIGN_IN_SUCCESS,
           payload: data
         });
+        history.push('/');
       }
     } catch (e) {
       dispatch({
@@ -46,32 +47,36 @@ export const signInAction = ({ email, password }) => {
   };
 };
 
-export const signUpAction = ({ name, email, password }) => {
+export const signUpAction = ({ name, email, password }, history) => {
   return async (dispatch) => {
     dispatch({
       type: LOADING
     });
     try {
-      const res = await axiosClient.post('auth/signup', {
+      const { data } = await axiosClient.post('auth/signup', {
         name,
         email,
         password
       });
-      if (res.data.error) {
+      if (data.error) {
         dispatch({
           type: SIGN_UP_ERROR,
-          payload: res.data.error
+          payload: data.error
         });
       } else {
-        dispatch({
-          type: SIGN_UP_SUCCESS,
-          payload: res.data.message
-        });
+        // Timeout instead of success popup to redirect from signup to signin
+        setTimeout(() => {
+          dispatch({
+            type: SIGN_UP_SUCCESS,
+            payload: data.message
+          });
+          history.push('/signin');
+        }, 1500);
       }
     } catch (e) {
       dispatch({
         type: SIGN_UP_ERROR,
-        payload: e.response.data.msg
+        payload: e.response.data.error
       });
     }
   };

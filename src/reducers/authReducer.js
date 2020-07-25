@@ -36,7 +36,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        message: action.payload
+        message: action.payload,
+        error: null
       };
     case SIGN_OUT:
       return {
@@ -44,7 +45,8 @@ export default (state = initialState, action) => {
         authenticated: null,
         token: null,
         user: null,
-        loading: false
+        loading: false,
+        error: null
       };
     case SIGN_UP_ERROR:
     case SIGN_IN_ERROR:

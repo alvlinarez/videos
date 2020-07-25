@@ -20,14 +20,7 @@ const SignIn = (props) => {
   const { history } = props;
   const dispatch = useDispatch();
   const error = useSelector((state) => state.auth.error);
-  const authenticated = useSelector((state) => state.auth.authenticated);
   const loading = useSelector((state) => state.auth.loading);
-
-  useEffect(() => {
-    if (authenticated) {
-      history.push('/');
-    }
-  }, [authenticated]);
 
   const formik = useFormik({
     initialValues: {
@@ -37,10 +30,10 @@ const SignIn = (props) => {
     validationSchema: yup.object({
       email: yup.string().email('Email invalid').required('Email is required'),
       password: yup.string().required('Password is required')
-      //.min(6, 'Password must contain at least 6 characters')
     }),
     onSubmit: (values) => {
-      dispatch(signInAction(values));
+      // dispatch form values to state to sign in
+      dispatch(signInAction(values, history));
     }
   });
 
@@ -83,6 +76,7 @@ const SignIn = (props) => {
               </div>
             )}
             {error && (
+              // show api errors
               <div className="input__error">
                 <p>{error}</p>
               </div>
