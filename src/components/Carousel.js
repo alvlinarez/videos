@@ -34,7 +34,7 @@ const breakpoints = {
   }
 };
 
-const Carousel = () => {
+const Carousel = ({ movies }) => {
   return (
     <Swiper
       spaceBetween={5}
@@ -42,14 +42,13 @@ const Carousel = () => {
       slidesPerGroup={2}
       breakpoints={breakpoints}
       scrollbar={{ draggable: true, dragClass: 'swiper-scrollbar-drag' }}
-      // onSwiper={(swiper) => console.log(swiper)}
-      // onSlideChange={() => console.log('slide change')}
     >
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((item) => (
-        <SwiperSlide key={item}>
-          <CarouselItem {...item} isList />
-        </SwiperSlide>
-      ))}
+      {movies &&
+        movies.map((item) => (
+          <SwiperSlide key={item.id}>
+            <CarouselItem {...item} isList />
+          </SwiperSlide>
+        ))}
     </Swiper>
   );
 };

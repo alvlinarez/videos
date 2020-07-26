@@ -1,5 +1,5 @@
 import {
-  GET_PLAYLIST,
+  GET_PLAYLIST_SUCCESS,
   GET_PLAYLIST_ERROR,
   ADD_VIDEO_PLAYLIST,
   ADD_VIDEO_PLAYLIST_ERROR,
@@ -9,14 +9,14 @@ import {
 } from '../types/playlistTypes';
 
 const initialState = {
-  playlist: [],
+  playlist: null,
   loading: false,
   error: null
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_PLAYLIST:
+    case GET_PLAYLIST_SUCCESS:
       return {
         ...state,
         loading: false,

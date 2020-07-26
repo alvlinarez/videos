@@ -1,15 +1,15 @@
 import {
-  GET_VIDEOS,
-  GET_VIDEOS_ERROR,
-  GET_VIDEO_PLAYING,
-  GET_VIDEO_PLAYING_ERROR,
+  GET_MOVIES_SUCCESS,
+  GET_MOVIES_ERROR,
+  GET_MOVIE_PLAYING_SUCCESS,
+  GET_MOVIE_PLAYING_ERROR,
   LOADING
-} from '../types/videosTypes';
+} from '../types/moviesTypes';
 
 const initialState = {
-  videos: [],
-  trends: [],
-  originals: [],
+  //movies: [],
+  trends: null,
+  originals: null,
   playing: {},
   error: null,
   loading: false
@@ -22,22 +22,22 @@ export default (state = initialState, action) => {
         ...state,
         loading: true
       };
-    case GET_VIDEOS:
+    case GET_MOVIES_SUCCESS:
       return {
         ...state,
         loading: false,
-        videos: action.payload.videos,
+        //movies: action.payload,
         trends: action.payload.trends,
         originals: action.payload.originals
       };
-    case GET_VIDEO_PLAYING:
+    case GET_MOVIE_PLAYING_SUCCESS:
       return {
         ...state,
         loading: false,
-        playing: state.videos.find((item) => item.id === action.payload) || {}
+        playing: state.movies.find((item) => item.id === action.payload) || {}
       };
-    case GET_VIDEO_PLAYING_ERROR:
-    case GET_VIDEOS_ERROR:
+    case GET_MOVIE_PLAYING_ERROR:
+    case GET_MOVIES_ERROR:
       return {
         ...state,
         error: action.payload

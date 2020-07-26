@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import authReducer from './authReducer';
-import videosReducer from './videosReducer';
+import moviesReducer from './moviesReducer';
 import playlistReducer from './playlistReducer';
 
 export default combineReducers({
   auth: authReducer,
-  videos: videosReducer,
+  movies: moviesReducer,
   playlist: playlistReducer
 });

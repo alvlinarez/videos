@@ -1,17 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import cover from '../assets/static/silhouette.png';
 import playIcon from '../assets/static/play-icon.png';
 import plusIcon from '../assets/static/plus-icon.png';
 import removeIcon from '../assets/static/remove-icon.png';
+
+import secondsToTime from '../utils/secondsToTime';
 
 import 'swiper/swiper.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 import '../assets/styles/components/CarouselItem.scss';
 
 const CarouselItem = (props) => {
-  const { id, title, year, contentRating, duration, isList } = props;
+  const { id, title, year, contentRating, duration, isList, cover } = props;
   const handleSetFavorite = () => {};
   const handleDeleteFavorite = (id) => {};
   return (
@@ -43,7 +44,9 @@ const CarouselItem = (props) => {
           )}
         </div>
         <p className="carousel-item__details--title">{title}</p>
-        <p className="carousel-item__details--subtitle">{`${year} ${contentRating} ${duration}`}</p>
+        <p className="carousel-item__details--subtitle">{`${year} ${
+          contentRating.name
+        } ${secondsToTime(duration)}`}</p>
       </div>
     </>
   );

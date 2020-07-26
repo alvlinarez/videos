@@ -55,7 +55,7 @@
   font-size: 20px;
 }
 
-.categories-container .swiper-slide:last-of-type {
+.categories-container .swiper-slide:not(:first-child):last-of-type {
   height: 250px;
   border-radius: 20px;
   overflow: hidden;
