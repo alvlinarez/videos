@@ -20,7 +20,7 @@ const CarouselItem = (props) => {
       <img className="swiper-image" src={cover} alt={title} />
       <div className="carousel-item__details">
         <div className="carousel-item__details--img-container">
-          <Link to={`/player/2`}>
+          <Link to={`/player/${id}`}>
             <img
               className="carousel-item__details--img"
               src={playIcon}

@@ -12,6 +12,15 @@ video:hover .Player-back {
   display: block;
 }
 
+.player-spinner__container {
+  position: absolute;
+  height: 100vh;
+  background-color: #000;
+  width: 100%;
+  display: grid;
+  place-items: center
+}
+
 .Player-back {
   position: fixed;
   top: 5px;

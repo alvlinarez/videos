@@ -32,16 +32,27 @@ export const getMoviesAction = () => {
 
 export const getPlayingMovieAction = (id) => {
   return async (dispatch) => {
+    dispatch({
+      type: LOADING
+    });
     if (id === null) {
       dispatch({
         type: GET_MOVIE_PLAYING_ERROR,
         payload: 'No movie found.'
       });
     } else {
-      dispatch({
-        type: GET_MOVIE_PLAYING_SUCCESS,
-        payload: id
-      });
+      try {
+        const { data } = await axiosClient.get(`movies/${id}`);
+        dispatch({
+          type: GET_MOVIE_PLAYING_SUCCESS,
+          payload: data
+        });
+      } catch (e) {
+        dispatch({
+          type: GET_MOVIE_PLAYING_ERROR,
+          payload: e.response.data.error
+        });
+      }
     }
   };
 };

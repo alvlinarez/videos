@@ -7,12 +7,11 @@ import {
 } from '../types/moviesTypes';
 
 const initialState = {
-  //movies: [],
   trends: null,
   originals: null,
   playing: {},
   error: null,
-  loading: false
+  loading: true
 };
 
 export default (state = initialState, action) => {
@@ -26,7 +25,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        //movies: action.payload,
         trends: action.payload.trends,
         originals: action.payload.originals
       };
@@ -34,13 +32,22 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        playing: state.movies.find((item) => item.id === action.payload) || {}
+        playing: action.payload
       };
     case GET_MOVIE_PLAYING_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+        playing: {}
+      };
     case GET_MOVIES_ERROR:
       return {
         ...state,
-        error: action.payload
+        loading: false,
+        error: action.payload,
+        trends: null,
+        originals: null
       };
     default:
       return state;
