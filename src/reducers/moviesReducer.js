@@ -3,11 +3,13 @@ import {
   GET_MOVIES_ERROR,
   GET_MOVIE_PLAYING_SUCCESS,
   GET_MOVIE_PLAYING_ERROR,
-  LOADING
+  LOADING,
+  UPDATE_MOST_WATCHED_SUCCESS,
+  UPDATE_MOST_WATCHED_ERROR
 } from '../types/moviesTypes';
 
 const initialState = {
-  trends: null,
+  mostWatched: null,
   originals: null,
   playing: {},
   error: null,
@@ -25,7 +27,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        trends: action.payload.trends,
+        mostWatched: action.payload.mostWatched,
         originals: action.payload.originals
       };
     case GET_MOVIE_PLAYING_SUCCESS:
@@ -46,8 +48,21 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload,
-        trends: null,
+        mostWatched: null,
         originals: null
+      };
+    case UPDATE_MOST_WATCHED_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        mostWatched: action.payload,
+        error: null
+      };
+    case UPDATE_MOST_WATCHED_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
       };
     default:
       return state;

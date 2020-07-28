@@ -3,7 +3,9 @@ import {
   GET_MOVIES_ERROR,
   GET_MOVIES_SUCCESS,
   GET_MOVIE_PLAYING_ERROR,
-  GET_MOVIE_PLAYING_SUCCESS
+  GET_MOVIE_PLAYING_SUCCESS,
+  UPDATE_MOST_WATCHED_ERROR,
+  UPDATE_MOST_WATCHED_SUCCESS
 } from '../types/moviesTypes';
 import { axiosClient } from '../config/axios';
 
@@ -13,12 +15,23 @@ export const getMoviesAction = () => {
       type: LOADING
     });
     try {
-      const { data } = await axiosClient.get('movies');
+      const [mostWatched, originals] = await Promise.all([
+        axiosClient.get('movies', {
+          params: {
+            mostWatched: true
+          }
+        }),
+        axiosClient.get('movies', {
+          params: {
+            originals: true
+          }
+        })
+      ]);
       dispatch({
         type: GET_MOVIES_SUCCESS,
         payload: {
-          trends: data.filter((movie) => movie.contentRating.name === '16+'),
-          originals: data.filter((movie) => movie.contentRating.name === 'PG')
+          mostWatched: mostWatched.data,
+          originals: originals.data
         }
       });
     } catch (e) {
@@ -53,6 +66,30 @@ export const getPlayingMovieAction = (id) => {
           payload: e.response.data.error
         });
       }
+    }
+  };
+};
+
+export const updateMostWatchedAction = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: LOADING
+    });
+    try {
+      const { data } = await axiosClient.get('movies', {
+        params: {
+          mostWatched: true
+        }
+      });
+      dispatch({
+        type: UPDATE_MOST_WATCHED_SUCCESS,
+        payload: data
+      });
+    } catch (e) {
+      dispatch({
+        type: UPDATE_MOST_WATCHED_ERROR,
+        payload: e.response.data.error
+      });
     }
   };
 };

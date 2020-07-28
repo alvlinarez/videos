@@ -10,11 +10,11 @@ import { getPlaylistAction } from '../actions/playlistActions';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const trends = useSelector((state) => state.movies.trends);
+  const mostWatched = useSelector((state) => state.movies.mostWatched);
   const originals = useSelector((state) => state.movies.originals);
   const playlist = useSelector((state) => state.playlist.playlist);
   useEffect(() => {
-    if (trends === null || originals === null) dispatch(getMoviesAction());
+    if (mostWatched === null || originals === null) dispatch(getMoviesAction());
     if (playlist === null) dispatch(getPlaylistAction());
   }, []);
 
@@ -27,11 +27,11 @@ const Home = () => {
         <Carousel movies={playlist} />
       </Categories>
 
-      <Categories title="Trending">
-        <Carousel movies={trends} />
+      <Categories title="Most Watched">
+        <Carousel movies={mostWatched} />
       </Categories>
 
-      <Categories title="Original">
+      <Categories title="Originals">
         <Carousel movies={originals} />
       </Categories>
     </>
