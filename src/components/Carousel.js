@@ -9,6 +9,7 @@ import 'swiper/components/scrollbar/scrollbar.scss';
 
 SwiperCore.use([Scrollbar]);
 
+// Responsive slides of carousel values
 const breakpoints = {
   320: {
     slidesPerView: 2,
@@ -46,7 +47,7 @@ const Carousel = ({ movies }) => {
       {movies &&
         movies.map((item) => (
           <SwiperSlide key={item.id}>
-            <CarouselItem {...item} isList />
+            <CarouselItem {...item} />
           </SwiperSlide>
         ))}
     </Swiper>

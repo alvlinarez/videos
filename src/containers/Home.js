@@ -10,16 +10,42 @@ import { getPlaylistAction } from '../actions/playlistActions';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const mostWatched = useSelector((state) => state.movies.mostWatched);
-  const originals = useSelector((state) => state.movies.originals);
+  let mostWatched = useSelector((state) => state.movies.mostWatched);
+  let originals = useSelector((state) => state.movies.originals);
   const playlist = useSelector((state) => state.playlist.playlist);
+
   useEffect(() => {
+    // Fill movies
     if (mostWatched === null || originals === null) dispatch(getMoviesAction());
+    // Get playlist
     if (playlist === null) dispatch(getPlaylistAction());
   }, []);
 
+  function shapeMovieArray(movieArray) {
+    let flag = false;
+    for (let i = 0; i < movieArray.length; i++) {
+      flag = false;
+      for (let j = 0; j < playlist.length; j++) {
+        if (movieArray[i].id === playlist[j].id) {
+          flag = true;
+        }
+      }
+      movieArray[i].isInPlaylist = flag;
+    }
+    return movieArray;
+  }
+
+  // Add the property isInPlaylist to each movie for add or remove in playlist
+  function reshapeMovies() {
+    if (mostWatched && originals && playlist) {
+      mostWatched = shapeMovieArray(mostWatched);
+      originals = shapeMovieArray(originals);
+    }
+  }
+
   return (
     <>
+      {reshapeMovies()}
       <Header />
       <Search isHome />
 

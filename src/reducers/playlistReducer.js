@@ -1,10 +1,10 @@
 import {
   GET_PLAYLIST_SUCCESS,
   GET_PLAYLIST_ERROR,
-  ADD_VIDEO_PLAYLIST,
-  ADD_VIDEO_PLAYLIST_ERROR,
-  REMOVE_VIDEO_PLAYLIST,
-  REMOVE_VIDEO_PLAYLIST_ERROR,
+  ADD_MOVIE_PLAYLIST,
+  ADD_MOVIE_PLAYLIST_ERROR,
+  REMOVE_MOVIE_PLAYLIST,
+  REMOVE_MOVIE_PLAYLIST_ERROR,
   LOADING
 } from '../types/playlistTypes';
 
@@ -22,21 +22,16 @@ export default (state = initialState, action) => {
         loading: false,
         playlist: action.payload
       };
-    case ADD_VIDEO_PLAYLIST:
+    case ADD_MOVIE_PLAYLIST:
+    case REMOVE_MOVIE_PLAYLIST:
       return {
         ...state,
         loading: false,
-        playlist: [...state.playlist, action.payload]
-      };
-    case REMOVE_VIDEO_PLAYLIST:
-      return {
-        ...state,
-        loading: false,
-        playlist: state.playlist.filter((item) => item.id !== action.payload)
+        playlist: action.payload
       };
     case GET_PLAYLIST_ERROR:
-    case ADD_VIDEO_PLAYLIST_ERROR:
-    case REMOVE_VIDEO_PLAYLIST_ERROR:
+    case ADD_MOVIE_PLAYLIST_ERROR:
+    case REMOVE_MOVIE_PLAYLIST_ERROR:
       return {
         ...state,
         loading: false,

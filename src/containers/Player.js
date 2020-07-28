@@ -21,6 +21,7 @@ const Player = (props) => {
   }, []);
 
   const handleBackButton = () => {
+    // Update list of most watched movies
     dispatch(updateMostWatchedAction());
     props.history.goBack();
   };
