@@ -15,24 +15,27 @@ export const getMoviesAction = () => {
       type: LOADING
     });
     try {
-      const [mostWatched, originals] = await Promise.all([
-        axiosClient.get('movies', {
-          params: {
-            mostWatched: true
-          }
-        }),
-        axiosClient.get('movies', {
-          params: {
-            originals: true
-          }
-        })
-      ]);
       const { data } = await axiosClient.get('movies');
+      const originals = data.filter((movie) => movie.original);
+      // Get first 7 most watched movies
+      const mostWatched = [
+        ...data
+          .sort(function compare(a, b) {
+            if (a.timesWatched < b.timesWatched) {
+              return 1;
+            }
+            if (a.timesWatched > b.timesWatched) {
+              return -1;
+            }
+            return 0;
+          })
+          .slice(0, 7)
+      ];
       dispatch({
         type: GET_MOVIES_SUCCESS,
         payload: {
-          mostWatched: mostWatched.data,
-          originals: originals.data,
+          mostWatched,
+          originals,
           movies: data
         }
       });

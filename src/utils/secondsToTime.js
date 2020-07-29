@@ -1,3 +1,4 @@
+// Seconds to time like 1h 45min
 export default (duration) => {
   const sec_num = new Date(1000 * duration).toISOString();
   let hours = sec_num.substr(11, 2);

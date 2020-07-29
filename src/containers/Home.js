@@ -7,6 +7,7 @@ import Categories from '../components/Categories';
 import Carousel from '../components/Carousel';
 import { getMoviesAction } from '../actions/moviesActions';
 import { getPlaylistAction } from '../actions/playlistActions';
+import moviesInPlaylist from '../utils/moviesInPlaylist';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -21,25 +22,11 @@ const Home = () => {
     if (playlist === null) dispatch(getPlaylistAction());
   }, []);
 
-  const shapeMovieArray = (movieArray) => {
-    let flag = false;
-    for (let i = 0; i < movieArray.length; i++) {
-      flag = false;
-      for (let j = 0; j < playlist.length; j++) {
-        if (movieArray[i].id === playlist[j].id) {
-          flag = true;
-        }
-      }
-      movieArray[i].isInPlaylist = flag;
-    }
-    return movieArray;
-  };
-
-  // Add the property isInPlaylist to each movie for add or remove in playlist
+  // If movies is in playlist
   const reshapeMovies = () => {
     if (mostWatched && originals && playlist) {
-      mostWatched = shapeMovieArray(mostWatched);
-      originals = shapeMovieArray(originals);
+      mostWatched = moviesInPlaylist(mostWatched, playlist);
+      originals = moviesInPlaylist(originals, playlist);
     }
   };
 

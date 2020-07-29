@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import '../assets/styles/components/Search.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchMovieAction } from '../actions/searchActions';
+import searchIcon from '../assets/static/search-icon.png';
+import '../assets/styles/components/Search.scss';
 
 const SearchBox = (props) => {
   const { query } = props;
@@ -14,26 +15,32 @@ const SearchBox = (props) => {
 
   // start searching when user press enter
   const handleSearch = (e) => {
-    if (e.key === 'Enter') {
-      if (movieSearch.trim() !== '' && movies) {
-        dispatch(searchMovieAction(movieSearch, movies));
-        history.push(`/search?q=${movieSearch}`);
-      }
+    // search with enter button only or click in search icon
+    if (e.key && e.key !== 'Enter') return;
+    if (movieSearch.trim() !== '' && movies) {
+      dispatch(searchMovieAction(movieSearch, movies));
+      if (query === movieSearch) return; // avoid researching
+      history.push(`/search?q=${movieSearch}`);
     }
   };
 
   return (
     <section className="main">
       <h2 className="main__title">What do you want to watch?</h2>
-      <input
-        type="text"
-        name="search"
-        onChange={(e) => setMovieSearch(e.target.value)}
-        className="main__input"
-        placeholder="Search..."
-        onKeyPress={handleSearch}
-        value={movieSearch}
-      />
+      <div className="main__search-container">
+        <input
+          type="text"
+          name="search"
+          onChange={(e) => setMovieSearch(e.target.value)}
+          className="main__search-container-main__input"
+          placeholder="Search..."
+          onKeyPress={handleSearch}
+          value={movieSearch}
+        />
+        <span className="main__search-container-main__span">
+          <img src={searchIcon} alt="search-icon" onClick={handleSearch} />
+        </span>
+      </div>
     </section>
   );
 };
