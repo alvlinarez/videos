@@ -27,11 +27,13 @@ export const getMoviesAction = () => {
           }
         })
       ]);
+      const { data } = await axiosClient.get('movies');
       dispatch({
         type: GET_MOVIES_SUCCESS,
         payload: {
           mostWatched: mostWatched.data,
-          originals: originals.data
+          originals: originals.data,
+          movies: data
         }
       });
     } catch (e) {

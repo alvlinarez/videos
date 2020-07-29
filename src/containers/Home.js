@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Header from '../components/Header';
-import Search from '../components/Search';
+import SearchBox from '../components/SearchBox';
 import Categories from '../components/Categories';
 import Carousel from '../components/Carousel';
 import { getMoviesAction } from '../actions/moviesActions';
@@ -21,7 +21,7 @@ const Home = () => {
     if (playlist === null) dispatch(getPlaylistAction());
   }, []);
 
-  function shapeMovieArray(movieArray) {
+  const shapeMovieArray = (movieArray) => {
     let flag = false;
     for (let i = 0; i < movieArray.length; i++) {
       flag = false;
@@ -33,21 +33,21 @@ const Home = () => {
       movieArray[i].isInPlaylist = flag;
     }
     return movieArray;
-  }
+  };
 
   // Add the property isInPlaylist to each movie for add or remove in playlist
-  function reshapeMovies() {
+  const reshapeMovies = () => {
     if (mostWatched && originals && playlist) {
       mostWatched = shapeMovieArray(mostWatched);
       originals = shapeMovieArray(originals);
     }
-  }
+  };
 
   return (
     <>
       {reshapeMovies()}
       <Header />
-      <Search isHome />
+      <SearchBox />
 
       <Categories title="My Playlist">
         <Carousel movies={playlist} />

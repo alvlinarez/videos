@@ -11,6 +11,7 @@ import SignUp from '../containers/SignUp';
 import Player from '../containers/Player';
 import NotFound from '../containers/NotFound';
 import '../assets/styles/App.scss';
+import Search from '../containers/Search';
 
 export const App = () => {
   return (
@@ -24,6 +25,7 @@ export const App = () => {
             <AuthenticatedRoutes>
               <Route exact path="/" component={Home} />
               <Route exact path="/player/:id" component={Player} />
+              <Route exact path="/search" component={Search} />
             </AuthenticatedRoutes>
             <Route component={NotFound} />
           </Switch>

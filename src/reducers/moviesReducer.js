@@ -9,6 +9,7 @@ import {
 } from '../types/moviesTypes';
 
 const initialState = {
+  movies: null,
   mostWatched: null,
   originals: null,
   playing: {},
@@ -28,7 +29,8 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         mostWatched: action.payload.mostWatched,
-        originals: action.payload.originals
+        originals: action.payload.originals,
+        movies: action.payload.movies
       };
     case GET_MOVIE_PLAYING_SUCCESS:
       return {
