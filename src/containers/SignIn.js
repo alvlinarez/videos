@@ -13,7 +13,7 @@ import * as yup from 'yup';
 import { isAuth } from '../utils/auth';
 import Header from '../components/Header';
 import Spinner from '../components/Spinner';
-
+import axios from 'axios';
 import '../assets/styles/components/SignIn.scss';
 import googleIcon from '../assets/static/google-icon.png';
 import facebookIcon from '../assets/static/facebook-icon.png';
@@ -38,6 +38,14 @@ const SignIn = (props) => {
       dispatch(signInAction(values, history));
     }
   });
+
+  const handleSignInGoogle = async () => {
+    window.location.href = 'http://localhost:5000/api/auth/google';
+  };
+
+  const handleSignInFacebook = async () => {
+    window.location.href = 'http://localhost:5000/api/auth/facebook';
+  };
 
   return (
     <>
@@ -98,11 +106,11 @@ const SignIn = (props) => {
           <section className="signIn__container--social-media">
             <div>
               <img src={googleIcon} alt="Google-Icon" />
-              <span>Sign In with Google</span>
+              <span onClick={handleSignInGoogle}>Sign In with Google</span>
             </div>
             <div>
               <img src={facebookIcon} alt="Twitter-Icon" />
-              <span>Sign In with Facebook</span>
+              <span onClick={handleSignInFacebook}>Sign In with Facebook</span>
             </div>
           </section>
           <p className="signIn__container--signUp">

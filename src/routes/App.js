@@ -12,6 +12,7 @@ import Player from '../containers/Player';
 import NotFound from '../containers/NotFound';
 import '../assets/styles/App.scss';
 import Search from '../containers/Search';
+import Oauth from '../containers/Oauth';
 
 export const App = () => {
   return (
@@ -22,6 +23,7 @@ export const App = () => {
           <Switch>
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/auth/oauth" component={Oauth} />
             <AuthenticatedRoutes>
               <Route exact path="/" component={Home} />
               <Route exact path="/player/:id" component={Player} />

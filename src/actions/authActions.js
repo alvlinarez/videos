@@ -6,7 +6,7 @@ import {
   SIGN_UP_ERROR,
   SIGN_OUT
 } from '../types/authTypes';
-import { authenticate, signOut } from '../utils/auth';
+import { authenticate, signInOauth, signOut } from '../utils/auth';
 import { axiosClient } from '../config/axios';
 
 export const signInAction = ({ email, password }, history) => {
@@ -37,6 +37,33 @@ export const signInAction = ({ email, password }, history) => {
           payload: data
         });
         history.push('/');
+      }
+    } catch (e) {
+      dispatch({
+        type: SIGN_IN_ERROR,
+        payload: e.response.data.error
+      });
+    }
+  };
+};
+
+export const signInOauthAction = (token) => {
+  return async (dispatch) => {
+    dispatch({
+      type: LOADING
+    });
+    try {
+      const data = signInOauth(token);
+      if (!data) {
+        dispatch({
+          type: SIGN_IN_ERROR,
+          payload: 'Invalid token.'
+        });
+      } else {
+        dispatch({
+          type: SIGN_IN_SUCCESS,
+          payload: data
+        });
       }
     } catch (e) {
       dispatch({

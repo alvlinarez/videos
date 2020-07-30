@@ -1,4 +1,5 @@
 import cookie from 'js-cookie';
+import parseJwt from './parseJwt';
 
 // set in cookie
 export const setCookie = (key, value) => {
@@ -42,6 +43,21 @@ export const removeLocalstorage = (key) => {
 export const authenticate = (token, user) => {
   setCookie('token', token);
   setLocalstorage('user', user);
+};
+
+// When user signed in by google or facebook
+export const signInOauth = (token) => {
+  const { sub: id, name, email, error } = parseJwt(token);
+  const user = {
+    id,
+    name,
+    email
+  };
+  if (!error) {
+    authenticate(token, user);
+    return { token, user };
+  }
+  return null;
 };
 
 // access user info from localstorage
