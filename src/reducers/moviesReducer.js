@@ -53,11 +53,27 @@ export default (state = initialState, action) => {
         mostWatched: null,
         originals: null
       };
+    // when user watch a movie, this one increments its timesWatched and sort
+    // to get 7 top again
     case UPDATE_MOST_WATCHED_SUCCESS:
       return {
         ...state,
         loading: false,
-        mostWatched: action.payload,
+        mostWatched: state.movies
+          .map((item) => {
+            if (item.id === action.payload) item.timesWatched++;
+            return item;
+          })
+          .sort(function compare(a, b) {
+            if (a.timesWatched < b.timesWatched) {
+              return 1;
+            }
+            if (a.timesWatched > b.timesWatched) {
+              return -1;
+            }
+            return 0;
+          })
+          .slice(0, 7),
         error: null
       };
     case UPDATE_MOST_WATCHED_ERROR:

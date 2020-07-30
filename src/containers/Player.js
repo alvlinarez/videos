@@ -3,10 +3,7 @@ import NotFound from './NotFound';
 
 import '../assets/styles/components/Player.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getPlayingMovieAction,
-  updateMostWatchedAction
-} from '../actions/moviesActions';
+import { getPlayingMovieAction } from '../actions/moviesActions';
 import Spinner from '../components/Spinner';
 
 const Player = (props) => {
@@ -26,8 +23,6 @@ const Player = (props) => {
   }, []);
 
   const handleBackButton = () => {
-    // Update list of most watched movies
-    dispatch(updateMostWatchedAction());
     props.history.goBack();
   };
 

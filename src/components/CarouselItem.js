@@ -15,6 +15,7 @@ import {
   addMovieToPlaylistAction,
   removeMovieToPlaylistAction
 } from '../actions/playlistActions';
+import { updateMostWatchedAction } from '../actions/moviesActions';
 
 const CarouselItem = (props) => {
   const {
@@ -39,7 +40,10 @@ const CarouselItem = (props) => {
       <img className="swiper-image" src={cover} alt={title} />
       <div className="carousel-item__details">
         <div className="carousel-item__details--img-container">
-          <Link to={`/player/${id}`}>
+          <Link
+            to={`/player/${id}`}
+            onClick={() => dispatch(updateMostWatchedAction(id))}
+          >
             <img
               className="carousel-item__details--img"
               src={playIcon}

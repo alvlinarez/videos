@@ -75,20 +75,15 @@ export const getPlayingMovieAction = (id) => {
   };
 };
 
-export const updateMostWatchedAction = () => {
+export const updateMostWatchedAction = (idMoviePlaying) => {
   return async (dispatch) => {
     dispatch({
       type: LOADING
     });
     try {
-      const { data } = await axiosClient.get('movies', {
-        params: {
-          mostWatched: true
-        }
-      });
       dispatch({
         type: UPDATE_MOST_WATCHED_SUCCESS,
-        payload: data
+        payload: idMoviePlaying
       });
     } catch (e) {
       dispatch({

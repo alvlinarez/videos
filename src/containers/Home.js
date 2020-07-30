@@ -17,10 +17,12 @@ const Home = () => {
 
   useEffect(() => {
     // Fill movies
-    if (mostWatched === null || originals === null) dispatch(getMoviesAction());
+    if (mostWatched === null || originals === null) {
+      dispatch(getMoviesAction());
+    }
     // Get playlist
     if (playlist === null) dispatch(getPlaylistAction());
-  }, []);
+  }, [mostWatched]);
 
   // If movies is in playlist
   const reshapeMovies = () => {
