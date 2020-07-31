@@ -8,6 +8,7 @@ import Carousel from '../components/Carousel';
 import { getMoviesAction } from '../actions/moviesActions';
 import { getPlaylistAction } from '../actions/playlistActions';
 import moviesInPlaylist from '../utils/moviesInPlaylist';
+import '../assets/styles/containers/Home.scss';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,13 @@ const Home = () => {
       <SearchBox />
 
       <Categories title="My Playlist">
-        <Carousel movies={playlist} />
+        {playlist && Object.keys(playlist).length === 0 ? (
+          <div className="playlist-notfound_container">
+            <h3>No movies in your playlist. Start adding some movies!</h3>
+          </div>
+        ) : (
+          <Carousel movies={playlist} />
+        )}
       </Categories>
 
       <Categories title="Most Watched">

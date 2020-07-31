@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import SearchBox from '../components/SearchBox';
 import queryString from 'query-string';
@@ -31,7 +31,7 @@ const Search = (props) => {
       // get results after refresh
       dispatch(searchMovieAction(q.toLowerCase(), movies));
     }
-  }, [movies]);
+  }, [movies, q]);
 
   // If movies' results are in playlist to show add and remove buttons
   const reshapeMovies = () => {
