@@ -3,7 +3,7 @@ import {
   GET_MOVIES_ERROR,
   GET_MOVIE_PLAYING_SUCCESS,
   GET_MOVIE_PLAYING_ERROR,
-  LOADING,
+  MOVIES_LOADING,
   UPDATE_MOST_WATCHED_SUCCESS,
   UPDATE_MOST_WATCHED_ERROR,
   RESET_MOVIES_STATE
@@ -20,7 +20,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case LOADING:
+    case MOVIES_LOADING:
       return {
         ...state,
         loading: true

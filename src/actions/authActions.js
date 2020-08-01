@@ -1,5 +1,5 @@
 import {
-  LOADING,
+  AUTH_LOADING,
   SIGN_IN_SUCCESS,
   SIGN_IN_ERROR,
   SIGN_UP_SUCCESS,
@@ -22,7 +22,7 @@ import { RESET_SEARCH_STATE } from '../types/searchTypes';
 export const signInAction = ({ email, password }, history) => {
   return async (dispatch) => {
     dispatch({
-      type: LOADING
+      type: AUTH_LOADING
     });
     try {
       const { data } = await axiosClient().post(
@@ -60,7 +60,7 @@ export const signInAction = ({ email, password }, history) => {
 export const signInOauthAction = (token) => {
   return (dispatch) => {
     dispatch({
-      type: LOADING
+      type: AUTH_LOADING
     });
     try {
       const data = signInOauth(token);
@@ -87,7 +87,7 @@ export const signInOauthAction = (token) => {
 export const signUpAction = ({ name, email, password }, history) => {
   return async (dispatch) => {
     dispatch({
-      type: LOADING
+      type: AUTH_LOADING
     });
     try {
       const { data } = await axiosClient().post('auth/signup', {
@@ -119,7 +119,7 @@ export const signUpAction = ({ name, email, password }, history) => {
 export const activateAccountAction = (error, token, history) => {
   return async (dispatch) => {
     dispatch({
-      type: LOADING
+      type: AUTH_LOADING
     });
     if (error) {
       dispatch({
@@ -154,7 +154,7 @@ export const activateAccountAction = (error, token, history) => {
 export const forgotPasswordAction = ({ email }, history) => {
   return async (dispatch) => {
     dispatch({
-      type: LOADING
+      type: AUTH_LOADING
     });
     try {
       const { data } = await axiosClient().put('auth/forgot-password', {
@@ -182,7 +182,7 @@ export const forgotPasswordAction = ({ email }, history) => {
 export const resetPasswordAction = (error, token, newPassword, history) => {
   return async (dispatch) => {
     dispatch({
-      type: LOADING
+      type: AUTH_LOADING
     });
     if (error) {
       dispatch({
@@ -218,7 +218,7 @@ export const resetPasswordAction = (error, token, newPassword, history) => {
 export const signOutAction = () => {
   return (dispatch) => {
     dispatch({
-      type: LOADING
+      type: AUTH_LOADING
     });
     signOut();
     dispatch({

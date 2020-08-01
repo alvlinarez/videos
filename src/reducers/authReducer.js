@@ -4,7 +4,7 @@ import {
   SIGN_UP_SUCCESS,
   SIGN_UP_ERROR,
   SIGN_OUT,
-  LOADING,
+  AUTH_LOADING,
   ACTIVATE_ACCOUNT_SUCCESS,
   ACTIVATE_ACCOUNT_ERROR,
   RESET_AUTH_MESSAGE,
@@ -25,7 +25,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case LOADING:
+    case AUTH_LOADING:
       return {
         ...state,
         loading: true

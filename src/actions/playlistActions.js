@@ -1,5 +1,5 @@
 import {
-  LOADING,
+  PLAYLIST_LOADING,
   GET_PLAYLIST_SUCCESS,
   GET_PLAYLIST_ERROR,
   ADD_MOVIE_PLAYLIST,
@@ -12,7 +12,7 @@ import { axiosClient } from '../config/axios';
 export const getPlaylistAction = () => {
   return async (dispatch) => {
     dispatch({
-      type: LOADING
+      type: PLAYLIST_LOADING
     });
     try {
       const { data } = await axiosClient().get('playlists/byUser');
@@ -32,7 +32,7 @@ export const getPlaylistAction = () => {
 export const addMovieToPlaylistAction = (id) => {
   return async (dispatch) => {
     dispatch({
-      type: LOADING
+      type: PLAYLIST_LOADING
     });
     try {
       const { data } = await axiosClient().put('playlists/addMovie', {
@@ -54,7 +54,7 @@ export const addMovieToPlaylistAction = (id) => {
 export const removeMovieToPlaylistAction = (id) => {
   return async (dispatch) => {
     dispatch({
-      type: LOADING
+      type: PLAYLIST_LOADING
     });
     try {
       const { data } = await axiosClient().put('playlists/removeMovie', {

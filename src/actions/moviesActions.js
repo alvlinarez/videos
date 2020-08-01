@@ -1,5 +1,5 @@
 import {
-  LOADING,
+  MOVIES_LOADING,
   GET_MOVIES_ERROR,
   GET_MOVIES_SUCCESS,
   GET_MOVIE_PLAYING_ERROR,
@@ -12,7 +12,7 @@ import { axiosClient } from '../config/axios';
 export const getMoviesAction = () => {
   return async (dispatch) => {
     dispatch({
-      type: LOADING
+      type: MOVIES_LOADING
     });
     try {
       const { data } = await axiosClient().get('movies');
@@ -51,7 +51,7 @@ export const getMoviesAction = () => {
 export const getPlayingMovieAction = (id) => {
   return async (dispatch) => {
     dispatch({
-      type: LOADING
+      type: MOVIES_LOADING
     });
     if (id === null) {
       dispatch({
@@ -78,7 +78,7 @@ export const getPlayingMovieAction = (id) => {
 export const updateMostWatchedAction = (idMoviePlaying) => {
   return async (dispatch) => {
     dispatch({
-      type: LOADING
+      type: MOVIES_LOADING
     });
     try {
       dispatch({

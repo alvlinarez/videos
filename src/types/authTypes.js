@@ -16,5 +16,5 @@ export const RESET_PASSWORD_ERROR = 'RESET_PASSWORD_ERROR';
 
 export const SIGN_OUT = 'SIGN_OUT';
 
-export const LOADING = 'LOADING';
+export const AUTH_LOADING = 'AUTH_LOADING';
 export const RESET_AUTH_MESSAGE = 'RESET_AUTH_MESSAGE';

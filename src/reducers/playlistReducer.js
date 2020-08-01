@@ -5,7 +5,7 @@ import {
   ADD_MOVIE_PLAYLIST_ERROR,
   REMOVE_MOVIE_PLAYLIST,
   REMOVE_MOVIE_PLAYLIST_ERROR,
-  LOADING,
+  PLAYLIST_LOADING,
   RESET_PLAYLIST_STATE
 } from '../types/playlistTypes';
 
@@ -38,7 +38,7 @@ export default (state = initialState, action) => {
         loading: false,
         error: action.payload
       };
-    case LOADING:
+    case PLAYLIST_LOADING:
       return {
         ...state,
         loading: true
