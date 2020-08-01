@@ -100,7 +100,7 @@ const SignIn = (props) => {
               </button>
             )}
             <div className="signIn__container--forgot-password">
-              <a href="/">Forgot your password?</a>
+              <Link to="/auth/forgot-password">Forgot your password?</Link>
             </div>
           </form>
           <section className="signIn__container--social-media">

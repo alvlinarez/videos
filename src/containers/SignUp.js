@@ -17,7 +17,6 @@ const SignUp = (props) => {
   const { history } = props;
   const dispatch = useDispatch();
   const error = useSelector((state) => state.auth.error);
-  const message = useSelector((state) => state.auth.message);
   const loading = useSelector((state) => state.auth.loading);
 
   const formik = useFormik({

@@ -13,6 +13,9 @@ import NotFound from '../containers/NotFound';
 import '../assets/styles/App.scss';
 import Search from '../containers/Search';
 import Oauth from '../containers/Oauth';
+import ActivateAccount from '../containers/ActivateAccount';
+import ForgotPassword from '../containers/ForgotPassword';
+import ResetPassword from '../containers/ResetPassword';
 
 export const App = () => {
   return (
@@ -24,6 +27,21 @@ export const App = () => {
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/auth/oauth" component={Oauth} />
+            <Route
+              exact
+              path="/auth/activate-account/verify"
+              component={ActivateAccount}
+            />
+            <Route
+              exact
+              path="/auth/forgot-password"
+              component={ForgotPassword}
+            />
+            <Route
+              exact
+              path="/auth/reset-password"
+              component={ResetPassword}
+            />
             <AuthenticatedRoutes>
               <Route exact path="/" component={Home} />
               <Route exact path="/player/:id" component={Player} />
