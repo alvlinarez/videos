@@ -40,11 +40,14 @@ const SignIn = (props) => {
   });
 
   const handleSignInGoogle = async () => {
-    window.location.href = 'http://localhost:5000/api/auth/google';
+    //window.location.href = 'http://localhost:5000/api/auth/google';
+    window.location.href = 'https://alg-videos.herokuapp.com/api/auth/google';
   };
 
   const handleSignInFacebook = async () => {
-    window.location.href = 'http://localhost:5000/api/auth/facebook';
+    //window.location.href = 'http://localhost:5000/api/auth/facebook';
+    window.location.href =
+      'https://alg-videos.herokuapp.com/api/api/auth/facebook';
   };
 
   return (
