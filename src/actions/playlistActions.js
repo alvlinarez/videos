@@ -15,7 +15,7 @@ export const getPlaylistAction = () => {
       type: LOADING
     });
     try {
-      const { data } = await axiosClient.get('playlists/byUser');
+      const { data } = await axiosClient().get('playlists/byUser');
       dispatch({
         type: GET_PLAYLIST_SUCCESS,
         payload: data.movies
@@ -35,7 +35,7 @@ export const addMovieToPlaylistAction = (id) => {
       type: LOADING
     });
     try {
-      const { data } = await axiosClient.put('playlists/addMovie', {
+      const { data } = await axiosClient().put('playlists/addMovie', {
         movieId: id
       });
       dispatch({
@@ -57,7 +57,7 @@ export const removeMovieToPlaylistAction = (id) => {
       type: LOADING
     });
     try {
-      const { data } = await axiosClient.put('playlists/removeMovie', {
+      const { data } = await axiosClient().put('playlists/removeMovie', {
         movieId: id
       });
       dispatch({

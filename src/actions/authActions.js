@@ -4,7 +4,14 @@ import {
   SIGN_IN_ERROR,
   SIGN_UP_SUCCESS,
   SIGN_UP_ERROR,
-  SIGN_OUT
+  SIGN_OUT,
+  ACTIVATE_ACCOUNT_SUCCESS,
+  ACTIVATE_ACCOUNT_ERROR,
+  FORGOT_PASSWORD_ERROR,
+  FORGOT_PASSWORD_SUCCESS,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_ERROR,
+  RESET_AUTH_MESSAGE
 } from '../types/authTypes';
 import { authenticate, signInOauth, signOut } from '../utils/auth';
 import { axiosClient } from '../config/axios';
@@ -15,7 +22,7 @@ export const signInAction = ({ email, password }, history) => {
       type: LOADING
     });
     try {
-      const { data } = await axiosClient.post(
+      const { data } = await axiosClient().post(
         'auth/signin',
         {},
         {
@@ -48,7 +55,7 @@ export const signInAction = ({ email, password }, history) => {
 };
 
 export const signInOauthAction = (token) => {
-  return async (dispatch) => {
+  return (dispatch) => {
     dispatch({
       type: LOADING
     });
@@ -80,7 +87,7 @@ export const signUpAction = ({ name, email, password }, history) => {
       type: LOADING
     });
     try {
-      const { data } = await axiosClient.post('auth/signup', {
+      const { data } = await axiosClient().post('auth/signup', {
         name,
         email,
         password
@@ -91,14 +98,11 @@ export const signUpAction = ({ name, email, password }, history) => {
           payload: data.error
         });
       } else {
-        // Timeout instead of success popup to redirect from signup to signin
-        setTimeout(() => {
-          dispatch({
-            type: SIGN_UP_SUCCESS,
-            payload: data.message
-          });
-          history.push('/signin');
-        }, 1500);
+        dispatch({
+          type: SIGN_UP_SUCCESS,
+          payload: data.message
+        });
+        history.push('/auth/account-activation');
       }
     } catch (e) {
       dispatch({
@@ -109,8 +113,97 @@ export const signUpAction = ({ name, email, password }, history) => {
   };
 };
 
-export const signOutAction = () => {
+export const activateAccountAction = (token, error, history) => {
   return async (dispatch) => {
+    dispatch({
+      type: LOADING
+    });
+    if (error) {
+      dispatch({
+        type: ACTIVATE_ACCOUNT_ERROR,
+        payload: error
+      });
+    } else {
+      try {
+        const { data } = await axiosClient().post('auth/account-activation', {
+          token
+        });
+        dispatch({
+          type: ACTIVATE_ACCOUNT_SUCCESS,
+          payload: data.message
+        });
+        setTimeout(() => {
+          dispatch({
+            type: RESET_AUTH_MESSAGE
+          });
+          history.push('/signin');
+        }, 2000);
+      } catch (e) {
+        dispatch({
+          type: ACTIVATE_ACCOUNT_ERROR,
+          payload: e.response.data.error
+        });
+      }
+    }
+  };
+};
+
+export const forgotPasswordAction = (email) => {
+  return async (dispatch) => {
+    dispatch({
+      type: LOADING
+    });
+    try {
+      const { data } = await axiosClient().put('auth/forgot-password', {
+        email
+      });
+      dispatch({
+        type: FORGOT_PASSWORD_SUCCESS,
+        payload: data.message
+      });
+      setTimeout(() => {
+        dispatch({
+          type: RESET_AUTH_MESSAGE
+        });
+        history.push('/');
+      }, 3000);
+    } catch (e) {
+      setError(e.response.data.error);
+    }
+  };
+};
+
+export const resetPasswordAction = (token, newPassword) => {
+  return async (dispatch) => {
+    dispatch({
+      type: LOADING
+    });
+    try {
+      const { data } = await axiosClient().put('auth/reset-password', {
+        resetPasswordLink: token,
+        newPassword
+      });
+      dispatch({
+        type: RESET_PASSWORD_SUCCESS,
+        payload: data
+      });
+      setTimeout(() => {
+        dispatch({
+          type: RESET_AUTH_MESSAGE
+        });
+        history.push('/');
+      }, 2000);
+    } catch (e) {
+      dispatch({
+        type: RESET_PASSWORD_ERROR,
+        payload: e.response.data.error
+      });
+    }
+  };
+};
+
+export const signOutAction = () => {
+  return (dispatch) => {
     dispatch({
       type: LOADING
     });

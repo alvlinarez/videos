@@ -6,12 +6,12 @@ const useDecodeToken = (token) => {
     name: '',
     email: ''
   });
-  const [error, setError] = useState(null);
+  const [errorToken, setErrorToken] = useState(null);
   useEffect(() => {
     if (token) {
       const decodeToken = jwt.decode(token);
       if (!decodeToken) {
-        setError('Invalid token.');
+        setErrorToken('Invalid token.');
       } else {
         setValues({
           ...values,
@@ -21,7 +21,7 @@ const useDecodeToken = (token) => {
       }
     }
   }, []);
-  return [error, setError, values];
+  return [errorToken, setErrorToken, values];
 };
 
 export default useDecodeToken;

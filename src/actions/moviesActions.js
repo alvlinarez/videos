@@ -15,7 +15,7 @@ export const getMoviesAction = () => {
       type: LOADING
     });
     try {
-      const { data } = await axiosClient.get('movies');
+      const { data } = await axiosClient().get('movies');
       const originals = data.filter((movie) => movie.original);
       // Get first 7 most watched movies
       const mostWatched = [
@@ -60,7 +60,7 @@ export const getPlayingMovieAction = (id) => {
       });
     } else {
       try {
-        const { data } = await axiosClient.get(`movies/${id}`);
+        const { data } = await axiosClient().get(`movies/${id}`);
         dispatch({
           type: GET_MOVIE_PLAYING_SUCCESS,
           payload: data

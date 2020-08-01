@@ -4,35 +4,35 @@ import { Redirect } from 'react-router-dom';
 import { isAuth } from '../utils/auth';
 import Header from '../components/Header';
 import Spinner from '../components/Spinner';
-import { axiosClient } from '../config/axios';
 import '../assets/styles/components/SignUp.scss';
 import '../assets/styles/containers/ActivateAccount.scss';
 import useDecodeToken from '../hooks/useDecodeToken';
 import queryString from 'query-string';
+import { useDispatch, useSelector } from 'react-redux';
+import { activateAccountAction } from '../actions/authActions';
 
-const ActivateAccount = (props) => {
+const AccountActivation = (props) => {
   const {
     history,
     location: { search }
   } = props;
   const { token } = queryString.parse(search);
-  const [error, setError, values] = useDecodeToken(token);
+  const message = useSelector((state) => state.auth.message);
+  const loading = useSelector((state) => state.auth.loading);
+  const error = useSelector((state) => state.auth.error);
+  const dispatch = useDispatch();
+  const [errorToken, setErrorToken, values] = useDecodeToken(token);
   const { name } = values;
-  const [loading, setLoading] = useState(false);
+
+  if (token === undefined && message === null) {
+    return <Redirect to={'/'} />;
+  }
+
+  // This page shows a message to activate account and also show a button when
+  // the user has clicked the email to activate their account
 
   const handleActivateAccount = async () => {
-    setLoading(true);
-    try {
-      await axiosClient.post('auth/account-activation', {
-        token
-      });
-      setLoading(false);
-      setError(null);
-      history.push('/signin');
-    } catch (e) {
-      setLoading(false);
-      setError(e.response.data.error);
-    }
+    dispatch(activateAccountAction(token, errorToken, history));
   };
   return (
     <>
@@ -40,14 +40,19 @@ const ActivateAccount = (props) => {
       <Header isAuth />
       <section className="activateAccount">
         <section className="activateAccount__container">
-          {error ? (
-            <div className="activateAccount__container-error">
-              <h2>Error</h2>
-              <p>{error}</p>
-            </div>
+          {message ? (
+            <>
+              <h3>{message}</h3>
+            </>
           ) : (
             <>
               <h2>Hey {name}, ready to activate your account and sign in?</h2>
+              {error && (
+                // show api errors
+                <div className="input__error">
+                  <p>{error}</p>
+                </div>
+              )}
               {loading ? (
                 <Spinner />
               ) : (
@@ -67,4 +72,4 @@ const ActivateAccount = (props) => {
   );
 };
 
-export default ActivateAccount;
+export default AccountActivation;

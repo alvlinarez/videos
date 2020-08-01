@@ -13,7 +13,7 @@ import NotFound from '../containers/NotFound';
 import '../assets/styles/App.scss';
 import Search from '../containers/Search';
 import Oauth from '../containers/Oauth';
-import ActivateAccount from '../containers/ActivateAccount';
+import AccountActivation from '../containers/AccountActivation';
 import ForgotPassword from '../containers/ForgotPassword';
 import ResetPassword from '../containers/ResetPassword';
 
@@ -29,8 +29,11 @@ export const App = () => {
             <Route exact path="/auth/oauth" component={Oauth} />
             <Route
               exact
-              path="/auth/activate-account/verify"
-              component={ActivateAccount}
+              path={[
+                '/auth/account-activation',
+                '/auth/account-activation/verify'
+              ]}
+              component={AccountActivation}
             />
             <Route
               exact
