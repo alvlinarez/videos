@@ -5,7 +5,8 @@ import {
   ADD_MOVIE_PLAYLIST_ERROR,
   REMOVE_MOVIE_PLAYLIST,
   REMOVE_MOVIE_PLAYLIST_ERROR,
-  LOADING
+  LOADING,
+  RESET_PLAYLIST_STATE
 } from '../types/playlistTypes';
 
 const initialState = {
@@ -41,6 +42,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true
+      };
+    case RESET_PLAYLIST_STATE:
+      return {
+        ...state,
+        playlist: null,
+        loading: false,
+        error: null
       };
     default:
       return state;

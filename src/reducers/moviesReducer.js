@@ -5,7 +5,8 @@ import {
   GET_MOVIE_PLAYING_ERROR,
   LOADING,
   UPDATE_MOST_WATCHED_SUCCESS,
-  UPDATE_MOST_WATCHED_ERROR
+  UPDATE_MOST_WATCHED_ERROR,
+  RESET_MOVIES_STATE
 } from '../types/moviesTypes';
 
 const initialState = {
@@ -81,6 +82,16 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload
+      };
+    case RESET_MOVIES_STATE:
+      return {
+        ...state,
+        movies: null,
+        mostWatched: null,
+        originals: null,
+        playing: {},
+        error: null,
+        loading: true
       };
     default:
       return state;

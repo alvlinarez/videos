@@ -15,6 +15,9 @@ import {
 } from '../types/authTypes';
 import { authenticate, signInOauth, signOut } from '../utils/auth';
 import { axiosClient } from '../config/axios';
+import { RESET_MOVIES_STATE } from '../types/moviesTypes';
+import { RESET_PLAYLIST_STATE } from '../types/playlistTypes';
+import { RESET_SEARCH_STATE } from '../types/searchTypes';
 
 export const signInAction = ({ email, password }, history) => {
   return async (dispatch) => {
@@ -218,6 +221,15 @@ export const signOutAction = () => {
       type: LOADING
     });
     signOut();
+    dispatch({
+      type: RESET_MOVIES_STATE
+    });
+    dispatch({
+      type: RESET_PLAYLIST_STATE
+    });
+    dispatch({
+      type: RESET_SEARCH_STATE
+    });
     dispatch({
       type: SIGN_OUT
     });
