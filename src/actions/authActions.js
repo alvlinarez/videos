@@ -113,7 +113,7 @@ export const signUpAction = ({ name, email, password }, history) => {
   };
 };
 
-export const activateAccountAction = (token, error, history) => {
+export const activateAccountAction = (error, token, history) => {
   return async (dispatch) => {
     dispatch({
       type: LOADING
@@ -148,7 +148,7 @@ export const activateAccountAction = (token, error, history) => {
   };
 };
 
-export const forgotPasswordAction = (email) => {
+export const forgotPasswordAction = ({ email }, history) => {
   return async (dispatch) => {
     dispatch({
       type: LOADING
@@ -166,38 +166,48 @@ export const forgotPasswordAction = (email) => {
           type: RESET_AUTH_MESSAGE
         });
         history.push('/');
-      }, 3000);
+      }, 3500);
     } catch (e) {
-      setError(e.response.data.error);
+      dispatch({
+        type: FORGOT_PASSWORD_ERROR,
+        payload: e.response.data.error
+      });
     }
   };
 };
 
-export const resetPasswordAction = (token, newPassword) => {
+export const resetPasswordAction = (error, token, newPassword, history) => {
   return async (dispatch) => {
     dispatch({
       type: LOADING
     });
-    try {
-      const { data } = await axiosClient().put('auth/reset-password', {
-        resetPasswordLink: token,
-        newPassword
-      });
-      dispatch({
-        type: RESET_PASSWORD_SUCCESS,
-        payload: data
-      });
-      setTimeout(() => {
-        dispatch({
-          type: RESET_AUTH_MESSAGE
-        });
-        history.push('/');
-      }, 2000);
-    } catch (e) {
+    if (error) {
       dispatch({
         type: RESET_PASSWORD_ERROR,
-        payload: e.response.data.error
+        payload: error
       });
+    } else {
+      try {
+        const { data } = await axiosClient().put('auth/reset-password', {
+          resetPasswordLink: token,
+          newPassword
+        });
+        dispatch({
+          type: RESET_PASSWORD_SUCCESS,
+          payload: data.message
+        });
+        setTimeout(() => {
+          dispatch({
+            type: RESET_AUTH_MESSAGE
+          });
+          history.push('/');
+        }, 2000);
+      } catch (e) {
+        dispatch({
+          type: RESET_PASSWORD_ERROR,
+          payload: e.response.data.error
+        });
+      }
     }
   };
 };

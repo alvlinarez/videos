@@ -21,7 +21,7 @@ const AccountActivation = (props) => {
   const loading = useSelector((state) => state.auth.loading);
   const error = useSelector((state) => state.auth.error);
   const dispatch = useDispatch();
-  const [errorToken, setErrorToken, values] = useDecodeToken(token);
+  const [errorToken, values] = useDecodeToken(token);
   const { name } = values;
 
   if (token === undefined && message === null) {
@@ -32,7 +32,7 @@ const AccountActivation = (props) => {
   // the user has clicked the email to activate their account
 
   const handleActivateAccount = async () => {
-    dispatch(activateAccountAction(token, errorToken, history));
+    dispatch(activateAccountAction(errorToken, token, history));
   };
   return (
     <>

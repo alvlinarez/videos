@@ -21,7 +21,7 @@ const useDecodeToken = (token) => {
       }
     }
   }, []);
-  return [errorToken, setErrorToken, values];
+  return [errorToken, values];
 };
 
 export default useDecodeToken;

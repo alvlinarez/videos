@@ -7,7 +7,11 @@ import {
   LOADING,
   ACTIVATE_ACCOUNT_SUCCESS,
   ACTIVATE_ACCOUNT_ERROR,
-  RESET_AUTH_MESSAGE
+  RESET_AUTH_MESSAGE,
+  RESET_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_ERROR,
+  RESET_PASSWORD_ERROR
 } from '../types/authTypes';
 import { getCookie } from '../utils/auth';
 
@@ -54,6 +58,8 @@ export default (state = initialState, action) => {
         loading: false,
         error: null
       };
+    case RESET_PASSWORD_SUCCESS:
+    case FORGOT_PASSWORD_SUCCESS:
     case ACTIVATE_ACCOUNT_SUCCESS:
       return {
         ...state,
@@ -64,6 +70,8 @@ export default (state = initialState, action) => {
     case SIGN_UP_ERROR:
     case SIGN_IN_ERROR:
     case ACTIVATE_ACCOUNT_ERROR:
+    case FORGOT_PASSWORD_ERROR:
+    case RESET_PASSWORD_ERROR:
       return {
         ...state,
         error: action.payload,
