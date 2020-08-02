@@ -45,9 +45,8 @@ const SignIn = (props) => {
   };
 
   const handleSignInFacebook = async () => {
-    //window.location.href = 'http://localhost:5000/api/auth/facebook';
-    window.location.href =
-      'https://alg-videos.herokuapp.com/api/api/auth/facebook';
+    //window.location.href = 'http://localhost:8000/api/auth/facebook';
+    window.location.href = 'https://alg-videos.herokuapp.com/api/auth/facebook';
   };
 
   return (
