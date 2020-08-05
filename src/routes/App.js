@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from '../store';
 import Layout from '../components/Layout';
 import ScrollToTop from '../components/ScrollToTop';
 import AuthenticatedRoutes from './AuthenticatedRoutes';
@@ -16,12 +14,20 @@ import Oauth from '../containers/Oauth';
 import AccountActivation from '../containers/AccountActivation';
 import ForgotPassword from '../containers/ForgotPassword';
 import ResetPassword from '../containers/ResetPassword';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAuthenticatedUser } from '../actions/authActions';
 
 export const App = () => {
+  const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  const authLoading = useSelector((state) => state.auth.authLoading);
+  useEffect(() => {
+    dispatch(getAuthenticatedUser());
+  }, []);
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <Provider store={store}>
+      {!authLoading && (
         <Layout>
           <Switch>
             <Route exact path="/signin" component={SignIn} />
@@ -45,7 +51,8 @@ export const App = () => {
               path="/auth/reset-password"
               component={ResetPassword}
             />
-            <AuthenticatedRoutes>
+
+            <AuthenticatedRoutes auth={isAuth}>
               <Route exact path="/" component={Home} />
               <Route exact path="/player/:id" component={Player} />
               <Route exact path="/search" component={Search} />
@@ -53,7 +60,7 @@ export const App = () => {
             <Route component={NotFound} />
           </Switch>
         </Layout>
-      </Provider>
+      )}
     </BrowserRouter>
   );
 };

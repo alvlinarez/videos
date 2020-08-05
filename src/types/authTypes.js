@@ -2,6 +2,10 @@
 export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS';
 export const SIGN_IN_ERROR = 'SIGN_IN_ERROR';
 
+export const USER_AUTH = 'USER_AUTH';
+export const USER_AUTH_SUCCESS = 'USER_AUTH_SUCCESS';
+export const USER_AUTH_ERROR = 'USER_AUTH_ERROR';
+
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_ERROR = 'SIGN_UP_ERROR';
 
@@ -15,6 +19,7 @@ export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
 export const RESET_PASSWORD_ERROR = 'RESET_PASSWORD_ERROR';
 
 export const SIGN_OUT = 'SIGN_OUT';
+export const SIGN_OUT_ERROR = 'SIGN_OUT_ERROR';
 
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const RESET_AUTH_MESSAGE = 'RESET_AUTH_MESSAGE';

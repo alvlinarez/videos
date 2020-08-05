@@ -28,6 +28,7 @@ const ResetPassword = (props) => {
   const loading = useSelector((state) => state.auth.loading);
   const message = useSelector((state) => state.auth.message);
   const error = useSelector((state) => state.auth.error);
+
   const dispatch = useDispatch();
 
   const [errorToken, values] = useDecodeToken(token);
@@ -50,10 +51,15 @@ const ResetPassword = (props) => {
     }
   });
 
+  // If user is already signed in
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  if (isAuth) {
+    return <Redirect to={'/'} />;
+  }
+
   return (
     <>
-      {isAuth() && <Redirect to={'/'} />}
-      <Header isAuth />
+      <Header authBackgroundColor />
       <section className="forgotPassword">
         <section className="forgotPassword__container">
           {message ? (

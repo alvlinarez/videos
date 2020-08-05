@@ -1,13 +1,12 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { isAuth } from '../utils/auth';
 
-const AuthenticatedRoutes = ({ children, ...rest }) => {
+const AuthenticatedRoutes = ({ children, auth, ...rest }) => {
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        isAuth() ? (
+        auth ? (
           children
         ) : (
           <Redirect

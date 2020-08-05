@@ -11,7 +11,11 @@ import {
   RESET_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_ERROR,
-  RESET_PASSWORD_ERROR
+  RESET_PASSWORD_ERROR,
+  SIGN_OUT_ERROR,
+  USER_AUTH,
+  USER_AUTH_SUCCESS,
+  USER_AUTH_ERROR
 } from '../types/authTypes';
 import { getCookie } from '../utils/auth';
 
@@ -20,7 +24,9 @@ const initialState = {
   message: null,
   loading: false,
   token: getCookie('token') || null,
-  user: JSON.parse(localStorage.getItem('user'))
+  user: {},
+  isAuth: false,
+  authLoading: true
 };
 
 export default (state = initialState, action) => {
@@ -41,7 +47,27 @@ export default (state = initialState, action) => {
         user: action.payload.user,
         token: action.payload.token,
         error: null,
-        loading: false
+        loading: false,
+        isAuth: true
+      };
+    case USER_AUTH:
+      return {
+        ...state,
+        authLoading: true
+      };
+    case USER_AUTH_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        authLoading: false
+      };
+    case USER_AUTH_SUCCESS:
+      return {
+        ...state,
+        user: action.payload.user,
+        isAuth: action.payload.isAuth,
+        authLoading: false,
+        error: null
       };
     case SIGN_UP_SUCCESS:
       return {
@@ -54,9 +80,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         token: null,
-        user: null,
+        user: {},
         loading: false,
-        error: null
+        error: null,
+        isAuth: false
       };
     case RESET_PASSWORD_SUCCESS:
     case FORGOT_PASSWORD_SUCCESS:
@@ -69,6 +96,7 @@ export default (state = initialState, action) => {
       };
     case SIGN_UP_ERROR:
     case SIGN_IN_ERROR:
+    case SIGN_OUT_ERROR:
     case ACTIVATE_ACCOUNT_ERROR:
     case FORGOT_PASSWORD_ERROR:
     case RESET_PASSWORD_ERROR:

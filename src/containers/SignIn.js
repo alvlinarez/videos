@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 // Dispatch
@@ -10,7 +10,6 @@ import { useFormik } from 'formik';
 // Validator
 import * as yup from 'yup';
 // Components
-import { isAuth } from '../utils/auth';
 import Header from '../components/Header';
 import Spinner from '../components/Spinner';
 import axios from 'axios';
@@ -20,9 +19,10 @@ import facebookIcon from '../assets/static/facebook-icon.png';
 
 const SignIn = (props) => {
   const { history } = props;
-  const dispatch = useDispatch();
   const error = useSelector((state) => state.auth.error);
   const loading = useSelector((state) => state.auth.loading);
+
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -39,9 +39,20 @@ const SignIn = (props) => {
     }
   });
 
+  // If user is already signed in
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  if (isAuth) {
+    return <Redirect to={'/'} />;
+  }
+
   const handleSignInGoogle = async () => {
     //window.location.href = 'http://localhost:5000/api/auth/google';
-    window.location.href = 'https://alg-videos.herokuapp.com/api/auth/google';
+    try {
+      const { data } = await axios.get('http://localhost:3000/auth/google', {});
+      console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleSignInFacebook = async () => {
@@ -51,8 +62,7 @@ const SignIn = (props) => {
 
   return (
     <>
-      {isAuth() && <Redirect to={'/'} />}
-      <Header isAuth />
+      <Header authBackgroundColor />
       <section className="signIn">
         <section className="signIn__container">
           <h2>Sign In</h2>
@@ -106,6 +116,9 @@ const SignIn = (props) => {
             </div>
           </form>
           <section className="signIn__container--social-media">
+            <div>
+              <a href="/auth/google">Sign In with Google</a>
+            </div>
             <div>
               <img src={googleIcon} alt="Google-Icon" />
               <span onClick={handleSignInGoogle}>Sign In with Google</span>

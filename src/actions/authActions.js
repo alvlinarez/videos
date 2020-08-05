@@ -11,7 +11,11 @@ import {
   FORGOT_PASSWORD_SUCCESS,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_ERROR,
-  RESET_AUTH_MESSAGE
+  RESET_AUTH_MESSAGE,
+  SIGN_OUT_ERROR,
+  USER_AUTH,
+  USER_AUTH_ERROR,
+  USER_AUTH_SUCCESS
 } from '../types/authTypes';
 import { authenticate, signInOauth, signOut } from '../utils/auth';
 import { axiosClient } from '../config/axios';
@@ -41,7 +45,6 @@ export const signInAction = ({ email, password }, history) => {
           payload: data.error
         });
       } else {
-        authenticate(data.token, data.user);
         dispatch({
           type: SIGN_IN_SUCCESS,
           payload: data
@@ -78,6 +81,45 @@ export const signInOauthAction = (token) => {
     } catch (e) {
       dispatch({
         type: SIGN_IN_ERROR,
+        payload: e.response.data.error
+      });
+    }
+  };
+};
+
+export const getAuthenticatedUser = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: USER_AUTH
+    });
+    try {
+      const {
+        data: { id, name, email }
+      } = await axiosClient().get('auth/user');
+      if (id && name && email) {
+        dispatch({
+          type: USER_AUTH_SUCCESS,
+          payload: {
+            user: {
+              id,
+              name,
+              email
+            },
+            isAuth: true
+          }
+        });
+      } else {
+        dispatch({
+          type: USER_AUTH_SUCCESS,
+          payload: {
+            user: {},
+            isAuth: false
+          }
+        });
+      }
+    } catch (e) {
+      dispatch({
+        type: USER_AUTH_ERROR,
         payload: e.response.data.error
       });
     }
@@ -216,22 +258,37 @@ export const resetPasswordAction = (error, token, newPassword, history) => {
 };
 
 export const signOutAction = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch({
       type: AUTH_LOADING
     });
-    signOut();
-    dispatch({
-      type: RESET_MOVIES_STATE
-    });
-    dispatch({
-      type: RESET_PLAYLIST_STATE
-    });
-    dispatch({
-      type: RESET_SEARCH_STATE
-    });
-    dispatch({
-      type: SIGN_OUT
-    });
+    //signOut();
+    try {
+      const { status } = await axiosClient().get('auth/signout');
+      if (status === 200) {
+        dispatch({
+          type: SIGN_OUT
+        });
+        dispatch({
+          type: RESET_MOVIES_STATE
+        });
+        dispatch({
+          type: RESET_PLAYLIST_STATE
+        });
+        dispatch({
+          type: RESET_SEARCH_STATE
+        });
+      } else {
+        dispatch({
+          type: SIGN_OUT_ERROR,
+          payload: 'Error at signing out'
+        });
+      }
+    } catch (e) {
+      dispatch({
+        type: SIGN_OUT_ERROR,
+        payload: e.response.data.error
+      });
+    }
   };
 };

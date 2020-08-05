@@ -6,15 +6,15 @@ import { signOutAction } from '../actions/authActions';
 import '../assets/styles/components/Header.scss';
 import logo from '../assets/static/logo-video.png';
 import gravatar from '../utils/gravatar';
-import userIcon from '../assets/static/user-icon.png';
 
 const Header = (props) => {
-  const { isAuth } = props; // if page is sign in or sign up to add class
-  const headerClass = isAuth ? 'isAuth' : '';
+  const { authBackgroundColor } = props; // if page is related to auth to add class
+  const headerClass = authBackgroundColor ? 'header-authBackgroundColor' : '';
   const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.auth.isAuth);
   const user = useSelector((state) => state.auth.user);
 
-  const handleSignOut = (e) => {
+  const handleSignOut = () => {
     dispatch(signOutAction());
   };
 
@@ -23,33 +23,21 @@ const Header = (props) => {
       <Link to="/">
         <img className="header__img" src={logo} alt="Videos" />
       </Link>
-      {!isAuth && (
+      {isAuth && (
         <div className="header__menu">
           <div className="header__menu--profile">
-            {user ? (
-              <img src={gravatar(user.email)} alt={user.email} />
-            ) : (
-              <img src={userIcon} alt="user-icon" />
-            )}
+            <img src={gravatar(user.email)} alt={user.email} />
             <p>Profile</p>
           </div>
           <ul>
-            {user ? (
-              <>
-                <li>
-                  <a href="/">{user.name}</a>
-                </li>
-                <li>
-                  <Link to="#logout" onClick={handleSignOut}>
-                    Sign Out
-                  </Link>
-                </li>
-              </>
-            ) : (
-              <li>
-                <Link to="/signin">Sign In</Link>
-              </li>
-            )}
+            <li>
+              <a href="/">{user.name}</a>
+            </li>
+            <li>
+              <Link to="#logout" onClick={handleSignOut}>
+                Sign Out
+              </Link>
+            </li>
           </ul>
         </div>
       )}

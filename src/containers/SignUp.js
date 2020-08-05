@@ -39,10 +39,15 @@ const SignUp = (props) => {
     }
   });
 
+  // If user is already signed in
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  if (isAuth) {
+    return <Redirect to={'/'} />;
+  }
+
   return (
     <>
-      {isAuth() && <Redirect to={'/'} />}
-      <Header isAuth />
+      <Header authBackgroundColor />
       <section className="signUp">
         <section className="signUp__container">
           <h2>Sign Up</h2>

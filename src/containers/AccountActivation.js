@@ -20,9 +20,16 @@ const AccountActivation = (props) => {
   const message = useSelector((state) => state.auth.message);
   const loading = useSelector((state) => state.auth.loading);
   const error = useSelector((state) => state.auth.error);
+
   const dispatch = useDispatch();
   const [errorToken, values] = useDecodeToken(token);
   const { name } = values;
+
+  // If user is already signed in
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  if (isAuth) {
+    return <Redirect to={'/'} />;
+  }
 
   if (token === undefined && message === null) {
     return <Redirect to={'/'} />;
@@ -36,8 +43,7 @@ const AccountActivation = (props) => {
   };
   return (
     <>
-      {isAuth() && <Redirect to={'/'} />}
-      <Header isAuth />
+      <Header authBackgroundColor />
       <section className="activateAccount">
         <section className="activateAccount__container">
           {message ? (
