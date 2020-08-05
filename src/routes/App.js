@@ -16,6 +16,7 @@ import ForgotPassword from '../containers/ForgotPassword';
 import ResetPassword from '../containers/ResetPassword';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAuthenticatedUser } from '../actions/authActions';
+import RootLoader from '../components/RootLoader';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,9 @@ export const App = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      {!authLoading && (
+      {authLoading ? (
+        <RootLoader />
+      ) : (
         <Layout>
           <Switch>
             <Route exact path="/signin" component={SignIn} />

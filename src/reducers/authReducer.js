@@ -17,13 +17,11 @@ import {
   USER_AUTH_SUCCESS,
   USER_AUTH_ERROR
 } from '../types/authTypes';
-import { getCookie } from '../utils/auth';
 
 const initialState = {
   error: null,
   message: null,
   loading: false,
-  token: getCookie('token') || null,
   user: {},
   isAuth: false,
   authLoading: true
@@ -45,7 +43,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         user: action.payload.user,
-        token: action.payload.token,
         error: null,
         loading: false,
         isAuth: true
@@ -79,7 +76,6 @@ export default (state = initialState, action) => {
     case SIGN_OUT:
       return {
         ...state,
-        token: null,
         user: {},
         loading: false,
         error: null,

@@ -17,7 +17,11 @@ import {
   USER_AUTH_ERROR,
   USER_AUTH_SUCCESS
 } from '../types/authTypes';
-import { authenticate, signInOauth, signOut } from '../utils/auth';
+import {
+  removeLocalstorage,
+  setLocalstorage,
+  signInOauth
+} from '../utils/auth';
 import { axiosClient } from '../config/axios';
 import { RESET_MOVIES_STATE } from '../types/moviesTypes';
 import { RESET_PLAYLIST_STATE } from '../types/playlistTypes';
@@ -45,6 +49,7 @@ export const signInAction = ({ email, password }, history) => {
           payload: data.error
         });
       } else {
+        setLocalstorage('authBackground', 'true');
         dispatch({
           type: SIGN_IN_SUCCESS,
           payload: data
@@ -278,6 +283,7 @@ export const signOutAction = () => {
         dispatch({
           type: RESET_SEARCH_STATE
         });
+        removeLocalstorage('authBackground');
       } else {
         dispatch({
           type: SIGN_OUT_ERROR,

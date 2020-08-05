@@ -1,9 +1,10 @@
 import React from 'react';
 import '../assets/styles/components/Spinner.scss';
 
-const Spinner = () => {
+const Spinner = (props) => {
+  const { rootLoader } = props;
   return (
-    <div className="spinner">
+    <div className={`spinner ${rootLoader ? 'rootLoader' : ''}`}>
       <div className="double-bounce1" />
       <div className="double-bounce2" />
     </div>
