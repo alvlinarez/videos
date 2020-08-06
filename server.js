@@ -8,6 +8,7 @@ const path = require('path');
 const app = express();
 
 app.use(cors());
+app.use(helmet());
 app.use(compression());
 app.use(cookieParser());
 // serving static build file that it will be built with npm run build
@@ -19,12 +20,6 @@ app.get(
   passport.authenticate('google', { scope: ['email', 'profile', 'openid'] })
 );
 
-// app.get('/auth/google', (req, res) => {
-//   return res.status(200).json({
-//     fap: 12
-//   });
-// });
-
 app.get(
   '/auth/google/callback',
   passport.authenticate('google', { session: false }),
@@ -34,22 +29,38 @@ app.get(
         error: `Error signing in with Google`
       });
     }
-    const { token, ...user } = req.user;
+    const { token } = req.user;
     res.cookie('token', token, {
       httpOnly: true,
       secure: false
     });
-    return res.redirect('/auth/oauth');
-    //return res.status(200).json({ token, user });
+    return res.redirect('/');
   }
 );
 
-app.get('/auth/userinfo', (req, res) => {
-  const token = req.cookies.token;
-  console.log(token);
-  return res.status(200).json({ a: '/auth/oauth' });
-  //return res.status(200).json({ token, user });
-});
+require('./server/strategies/facebook');
+app.get(
+  '/auth/facebook',
+  passport.authenticate('facebook', { scope: ['email'] })
+);
+
+app.get(
+  '/auth/facebook/callback',
+  passport.authenticate('facebook', { session: false }),
+  (req, res) => {
+    if (!req.user) {
+      return res.status(401).json({
+        error: `Error signing in with Facebook`
+      });
+    }
+    const { token } = req.user;
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: false
+    });
+    return res.redirect('/');
+  }
+);
 
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));

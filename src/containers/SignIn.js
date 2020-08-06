@@ -117,15 +117,12 @@ const SignIn = (props) => {
           </form>
           <section className="signIn__container--social-media">
             <div>
+              <img src={googleIcon} alt="Google-Icon" />
               <a href="/auth/google">Sign In with Google</a>
             </div>
             <div>
-              <img src={googleIcon} alt="Google-Icon" />
-              <span onClick={handleSignInGoogle}>Sign In with Google</span>
-            </div>
-            <div>
-              <img src={facebookIcon} alt="Twitter-Icon" />
-              <span onClick={handleSignInFacebook}>Sign In with Facebook</span>
+              <img src={facebookIcon} alt="Facebook-Icon" />
+              <a href="/auth/facebook">Sign In with Facebook</a>
             </div>
           </section>
           <p className="signIn__container--signUp">

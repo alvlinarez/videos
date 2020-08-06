@@ -60,9 +60,15 @@
   width: 30px;
 }
 
-.signIn__container--social-media > div > span:hover {
-  text-decoration: underline;
-  cursor: pointer;
+.signIn__container--social-media > div {
+  & > a {
+    color: #ffffff;
+    text-decoration: none;
+  }
+  & > a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }
 
 .signIn__container--signUp {
