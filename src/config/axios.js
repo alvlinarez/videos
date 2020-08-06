@@ -5,9 +5,9 @@ export const axiosClient = () => {
   const token = getCookie('token') || null;
   return axios.create({
     //dev
-    //baseURL: 'http://localhost:5000/api/',
+    baseURL: 'http://localhost:5000/api/',
     //prod
-    baseURL: 'https://alg-videos.herokuapp.com/api/',
+    //baseURL: 'https://alg-videos.herokuapp.com/api/',
     withCredentials: true
   });
 };
