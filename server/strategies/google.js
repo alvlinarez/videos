@@ -21,7 +21,7 @@ passport.use(
       }
       try {
         const { data } = await axios.post(
-          'http://localhost:5000/api/auth/signin-provider',
+          `${config.apiUrl}auth/signin-provider`,
           {
             name,
             email

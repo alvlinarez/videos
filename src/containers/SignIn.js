@@ -45,21 +45,6 @@ const SignIn = (props) => {
     return <Redirect to={'/'} />;
   }
 
-  const handleSignInGoogle = async () => {
-    //window.location.href = 'http://localhost:5000/api/auth/google';
-    try {
-      const { data } = await axios.get('http://localhost:3000/auth/google', {});
-      console.log(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const handleSignInFacebook = async () => {
-    //window.location.href = 'http://localhost:8000/api/auth/facebook';
-    window.location.href = 'https://alg-videos.herokuapp.com/api/auth/facebook';
-  };
-
   return (
     <>
       <Header authBackgroundColor />

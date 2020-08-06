@@ -1,7 +1,6 @@
 const axios = require('axios');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
-const jwt = require('jsonwebtoken');
 
 const config = require('../config');
 
@@ -22,7 +21,7 @@ passport.use(
       }
       try {
         const { data } = await axios.post(
-          'http://localhost:5000/api/auth/signin-provider',
+          `${config.apiUrl}auth/signin-provider`,
           {
             name: first_name + '' + last_name,
             email
