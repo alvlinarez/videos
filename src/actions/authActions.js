@@ -17,11 +17,7 @@ import {
   USER_AUTH_ERROR,
   USER_AUTH_SUCCESS
 } from '../types/authTypes';
-import {
-  removeLocalstorage,
-  setLocalstorage,
-  signInOauth
-} from '../utils/auth';
+import { removeLocalstorage, setLocalstorage } from '../utils/auth';
 import { axiosClient } from '../config/axios';
 import { RESET_MOVIES_STATE } from '../types/moviesTypes';
 import { RESET_PLAYLIST_STATE } from '../types/playlistTypes';
@@ -55,33 +51,6 @@ export const signInAction = ({ email, password }, history) => {
           payload: data
         });
         history.push('/');
-      }
-    } catch (e) {
-      dispatch({
-        type: SIGN_IN_ERROR,
-        payload: e.response.data.error
-      });
-    }
-  };
-};
-
-export const signInOauthAction = (token) => {
-  return (dispatch) => {
-    dispatch({
-      type: AUTH_LOADING
-    });
-    try {
-      const data = signInOauth(token);
-      if (!data) {
-        dispatch({
-          type: SIGN_IN_ERROR,
-          payload: 'Invalid token.'
-        });
-      } else {
-        dispatch({
-          type: SIGN_IN_SUCCESS,
-          payload: data
-        });
       }
     } catch (e) {
       dispatch({
@@ -267,7 +236,6 @@ export const signOutAction = () => {
     dispatch({
       type: AUTH_LOADING
     });
-    //signOut();
     try {
       const { status } = await axiosClient().get('auth/signout');
       if (status === 200) {

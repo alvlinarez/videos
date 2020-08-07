@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 // Components
-import { isAuth } from '../utils/auth';
 import Header from '../components/Header';
 import Spinner from '../components/Spinner';
 import '../assets/styles/components/SignUp.scss';

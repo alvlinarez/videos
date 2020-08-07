@@ -8,7 +8,6 @@ import { signUpAction } from '../actions/authActions';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 // Components
-import { isAuth } from '../utils/auth';
 import Header from '../components/Header';
 import Spinner from '../components/Spinner';
 import '../assets/styles/components/SignUp.scss';
