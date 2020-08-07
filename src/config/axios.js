@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const axiosClient = () => {
   return axios.create({
-    baseURL: 'https://alg-videos.herokuapp.com/api/',
+    baseURL: 'http://localhost:5000/api/',
     withCredentials: true
   });
 };
