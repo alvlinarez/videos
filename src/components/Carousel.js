@@ -4,8 +4,9 @@ import SwiperCore, { Scrollbar } from 'swiper';
 import CarouselItem from './CarouselItem';
 
 import '../assets/styles/components/Carousel.scss';
-import 'swiper/swiper.scss';
-import 'swiper/components/scrollbar/scrollbar.scss';
+// swiper styles
+import '../assets/styles/swiper/swiper.scss';
+import '../assets/styles/swiper/scrollbar/scrollbar.scss';
 
 SwiperCore.use([Scrollbar]);
 

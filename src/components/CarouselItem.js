@@ -8,9 +8,11 @@ import removeIcon from '../assets/static/remove-icon.png';
 
 import secondsToTime from '../utils/secondsToTime';
 
-import 'swiper/swiper.scss';
-import 'swiper/components/scrollbar/scrollbar.scss';
 import '../assets/styles/components/CarouselItem.scss';
+// swiper styles
+import '../assets/styles/swiper/swiper.scss';
+import '../assets/styles/swiper/scrollbar/scrollbar.scss';
+
 import {
   addMovieToPlaylistAction,
   removeMovieToPlaylistAction
