@@ -7,7 +7,8 @@ const config = require('../config');
 const facebookOptions = {
   clientID: config.facebookClientId,
   clientSecret: config.facebookClientSecret,
-  callbackURL: '/auth/facebook/callback',
+  callbackURL: 'https://alvlinarez.dev/auth/facebook/callback',
+  //callbackURL: '/auth/facebook/callback',
   profileFields: ['id', 'email', 'first_name', 'last_name']
 };
 
