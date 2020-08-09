@@ -52,13 +52,13 @@ export const App = () => {
               path="/auth/reset-password"
               component={ResetPassword}
             />
-
+            <Route exact path="/404" component={NotFound} />
             <AuthenticatedRoutes auth={isAuth}>
               <Route exact path="/" component={Home} />
               <Route exact path="/player/:id" component={Player} />
               <Route exact path="/search" component={Search} />
+              <Route component={NotFound} />
             </AuthenticatedRoutes>
-            <Route component={NotFound} />
           </Switch>
         </Layout>
       )}
