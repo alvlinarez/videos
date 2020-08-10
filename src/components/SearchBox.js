@@ -30,6 +30,11 @@ const SearchBox = (props) => {
       <div className="main__search-container">
         <input
           type="text"
+          id="search"
+          spellCheck="false"
+          aria-label="Search"
+          aria-haspopup="false"
+          role="button"
           name="search"
           onChange={(e) => setMovieSearch(e.target.value)}
           className="main__search-container-main__input"

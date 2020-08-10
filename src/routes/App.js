@@ -54,10 +54,12 @@ export const App = () => {
             />
             <Route exact path="/404" component={NotFound} />
             <AuthenticatedRoutes auth={isAuth}>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/player/:id" component={Player} />
-              <Route exact path="/search" component={Search} />
-              <Route component={NotFound} />
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/player/:id" component={Player} />
+                <Route exact path="/search" component={Search} />
+                <Route component={NotFound} />
+              </Switch>
             </AuthenticatedRoutes>
           </Switch>
         </Layout>
