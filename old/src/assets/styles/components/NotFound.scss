@@ -1,0 +1,46 @@
+.main-404 {
+  position: relative;
+  width: auto;
+  min-height: 75vh;
+  height: auto;
+}
+
+.main-404__container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  min-height: 75vh;
+  color: white
+}
+
+.main-404__container--title {
+  width: 70%;
+  height: 70%;
+  padding: 10px;
+  text-align: center;
+}
+
+.main-404__container--title h2 {
+  font-size: 10rem;
+  margin: 0;
+  animation-duration: 2.5s;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+}
+
+@keyframes pulse {
+  0% {transform: scale(1);}
+  50% {transform: scale(1.1);}
+  100% {transform: scale(1);}
+}
+
+.pulse {
+  animation-name: pulse;
+  animation-duration: 1s;
+}
+
+.main-404__container--subtitle p {
+  font-size: 3rem;
+  font-weight: bold;
+}

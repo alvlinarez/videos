@@ -1,0 +1,21 @@
+@import "Vars";
+@import "Media";
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  height: 100%;
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  font-size: 1.6rem;
+  font-family: $theme-font;
+  background: $main-color;
+}
