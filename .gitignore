@@ -24,3 +24,5 @@ npm-debug.log*
 # idea
 /.idea
 
+/.next
+/pages
