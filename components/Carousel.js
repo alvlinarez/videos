@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Scrollbar } from 'swiper';
 import CarouselItem from './CarouselItem';
 
-import '../styles/components/Carousel.scss';
+//import '../styles/components/Carousel.scss';
 // swiper styles
 //import '../styles/swiper/swiper.scss';
 //import '../styles/swiper/scrollbar/scrollbar.scss';

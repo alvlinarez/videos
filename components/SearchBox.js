@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchMovieAction } from '../actions/searchActions';
-import '../styles/components/Search.scss';
+import searchStyles from '../styles/components/Search.module.scss';
 
 const SearchBox = (props) => {
   const { query } = props;
@@ -24,9 +24,11 @@ const SearchBox = (props) => {
   };
 
   return (
-    <section className="main">
-      <h2 className="main__title">What do you want to watch?</h2>
-      <div className="main__search-container">
+    <section className={`${searchStyles.main}`}>
+      <h2 className={`${searchStyles.mainTitle}`}>
+        What do you want to watch?
+      </h2>
+      <div className={`${searchStyles.mainSearchContainer}`}>
         <input
           type="text"
           id="search"
@@ -36,12 +38,12 @@ const SearchBox = (props) => {
           role="button"
           name="search"
           onChange={(e) => setMovieSearch(e.target.value)}
-          className="main__search-container-main__input"
+          className={`${searchStyles.mainSearchContainerMainInput}`}
           placeholder="Search..."
           onKeyPress={handleSearch}
           value={movieSearch}
         />
-        <span className="main__search-container-main__span">
+        <span className={`${searchStyles.mainSearchContainerMainSpan}`}>
           <img
             src="/static/search-icon.png"
             alt="search-icon"

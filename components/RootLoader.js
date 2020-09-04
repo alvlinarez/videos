@@ -1,12 +1,14 @@
 import React from 'react';
 import Spinner from './Spinner';
-import '../styles/components/RootLoader.scss';
+import rootLoaderStyles from '../styles/components/RootLoader.module.scss';
 
 const RootLoader = () => {
   const background = localStorage.getItem('authBackground');
   return (
     <div
-      className={`rootLoader-container ${background && 'rootLoader-authColor'}`}
+      className={`${rootLoaderStyles.rootLoaderContainer} ${
+        background && rootLoaderStyles.rootLoaderAuthColor
+      }`}
     >
       <Spinner rootLoader />
     </div>

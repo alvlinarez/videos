@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 // Dispatch
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,7 +11,8 @@ import * as yup from 'yup';
 // Components
 import Header from '../components/Header';
 import Spinner from '../components/Spinner';
-import '../styles/components/SignUp.scss';
+import signInStyles from '../styles/containers/SignIn.module.scss';
+import signUpStyles from '../styles/containers/SignUp.module.scss';
 
 const SignUp = () => {
   const router = useRouter();
@@ -39,25 +40,25 @@ const SignUp = () => {
     }
   });
 
-  // If user is already signed in
-  const isAuth = useSelector((state) => state.auth.isAuth);
-  if (isAuth) {
-    return <Redirect to={'/'} />;
-  }
+  // // If user is already signed in
+  // const isAuth = useSelector((state) => state.auth.isAuth);
+  // if (isAuth) {
+  //   return <Redirect to={'/'} />;
+  // }
 
   return (
     <>
       <Header authBackgroundColor />
-      <section className="signUp">
-        <section className="signUp__container">
+      <section className={`${signUpStyles.signUp}`}>
+        <section className={`${signUpStyles.signUpContainer}`}>
           <h2>Sign Up</h2>
           <form
-            className="signUp__container--form"
+            className={`${signUpStyles.signUpContainerForm}`}
             onSubmit={formik.handleSubmit}
           >
             <input
               name="name"
-              className="input"
+              className={`${signInStyles.input}`}
               type="text"
               placeholder="Name"
               value={formik.values.name}
@@ -65,13 +66,13 @@ const SignUp = () => {
               onChange={formik.handleChange}
             />
             {formik.touched.name && formik.errors.name && (
-              <div className="input__error">
+              <div className={`${signInStyles.inputError}`}>
                 <p>{formik.errors.name}</p>
               </div>
             )}
             <input
               name="email"
-              className="input"
+              className={`${signInStyles.input}`}
               type="text"
               placeholder="Email"
               value={formik.values.email}
@@ -79,14 +80,14 @@ const SignUp = () => {
               onChange={formik.handleChange}
             />
             {formik.touched.email && formik.errors.email && (
-              <div className="input__error">
+              <div className={`${signInStyles.inputError}`}>
                 <p>{formik.errors.email}</p>
               </div>
             )}
 
             <input
               name="password"
-              className="input"
+              className={`${signInStyles.input}`}
               type="password"
               placeholder="Password"
               value={formik.values.password}
@@ -94,13 +95,13 @@ const SignUp = () => {
               onChange={formik.handleChange}
             />
             {formik.touched.password && formik.errors.password && (
-              <div className="input__error">
+              <div className={`${signInStyles.inputError}`}>
                 <p>{formik.errors.password}</p>
               </div>
             )}
             {error && (
               // show api errors
-              <div className="input__error">
+              <div className={`${signInStyles.inputError}`}>
                 <p>{error}</p>
               </div>
             )}
@@ -112,8 +113,11 @@ const SignUp = () => {
               </button>
             )}
           </form>
-          <p className="signUp__container--signIn">
-            Already have an account? <Link to="/signin">Sign In</Link>
+          <p className={`${signUpStyles.signUpContainerSignIn}`}>
+            Already have an account?{' '}
+            <Link href="/signin">
+              <a>Sign In</a>
+            </Link>
           </p>
         </section>
       </section>

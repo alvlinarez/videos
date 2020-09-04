@@ -1,12 +1,16 @@
 import React from 'react';
-import '../styles/components/Spinner.scss';
+import spinnerStyles from '../styles/components/Spinner.module.scss';
 
 const Spinner = (props) => {
   const { rootLoader } = props;
   return (
-    <div className={`spinner ${rootLoader ? 'rootLoader' : ''}`}>
-      <div className="double-bounce1" />
-      <div className="double-bounce2" />
+    <div
+      className={`${spinnerStyles.spinner} ${
+        rootLoader ? spinnerStyles.rootLoader : ''
+      }`}
+    >
+      <div className={`${spinnerStyles.doubleBounce1}`} />
+      <div className={`${spinnerStyles.doubleBounce2}`} />
     </div>
   );
 };

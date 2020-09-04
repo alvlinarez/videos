@@ -1,9 +1,9 @@
 import React from 'react';
-import '../styles/components/Footer.scss';
+import footerStyles from '../styles/components/Footer.module.scss';
 
 const Footer = () => {
   return (
-    <footer className="footer">
+    <footer className={`${footerStyles.footer}`}>
       <span>Made with &#x2764; by @alvlinarez</span>
       {/*<a href="/">Terms of Use</a>*/}
       {/*<a href="/">Privacy & Security</a>*/}

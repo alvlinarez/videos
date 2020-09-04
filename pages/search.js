@@ -8,7 +8,7 @@ import Carousel from '../components/Carousel';
 import Categories from '../components/Categories';
 import { searchMovieAction } from '../actions/searchActions';
 import moviesInPlaylist from '../utils/moviesInPlaylist';
-import '../styles/containers/Search.scss';
+import searchStyles from '../styles/containers/Search.module.scss';
 
 const Search = (props) => {
   const { q } = queryString.parse(props.location.search);
@@ -47,7 +47,7 @@ const Search = (props) => {
       <SearchBox query={q} />
 
       {resultsSearch && Object.keys(resultsSearch).length === 0 ? (
-        <div className="search-notfound_container">
+        <div className={`${searchStyles.searchNotFoundContainer}`}>
           <h2>No results found</h2>
         </div>
       ) : (

@@ -1,14 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { signOutAction } from '../actions/authActions';
 
-import '../styles/components/Header.scss';
+import headerStyles from '../styles/components/Header.module.scss';
 import gravatar from '../utils/gravatar';
 
 const Header = (props) => {
   const { authBackgroundColor } = props; // if page is related to auth to add class
-  const headerClass = authBackgroundColor ? 'header-authBackgroundColor' : '';
+  const headerClass = authBackgroundColor
+    ? headerStyles.headerAuthBackgroundColor
+    : '';
   const dispatch = useDispatch();
   const isAuth = useSelector((state) => state.auth.isAuth);
   const user = useSelector((state) => state.auth.user);
@@ -18,17 +20,19 @@ const Header = (props) => {
   };
 
   return (
-    <header className={`header ${headerClass}`}>
-      <Link to="/">
-        <img
-          className="header__img"
-          src="/static/logo-video.png"
-          alt="Videos"
-        />
+    <header className={`${headerStyles.header} ${headerClass}`}>
+      <Link href="/">
+        <a>
+          <img
+            className={`${headerStyles.headerImg}`}
+            src="/static/logo-video.png"
+            alt="Videos"
+          />
+        </a>
       </Link>
       {isAuth && (
-        <div className="header__menu">
-          <div className="header__menu--profile">
+        <div className={`${headerStyles.headerMenu}`}>
+          <div className={`${headerStyles.headerMenuProfile}`}>
             <img src={gravatar(user.email)} alt={user.email} />
             <p>Profile</p>
           </div>
@@ -37,8 +41,8 @@ const Header = (props) => {
               <a href="/">{user.name}</a>
             </li>
             <li>
-              <Link to="#logout" onClick={handleSignOut}>
-                Sign Out
+              <Link href="#logout" onClick={handleSignOut}>
+                <a>Sign Out</a>
               </Link>
             </li>
           </ul>

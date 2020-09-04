@@ -8,7 +8,7 @@
   min-height: calc(100vh - 200px); /* El ancho será igual al tamaño de toodo el height menos 200px (100px del header + 100px del footer) */
 }
 
-.signIn__container {
+.signInContainer {
   background-color: rgba(255,255,255,0.1);
   border: 2px solid #ffffff;
   border-radius: 40px;
@@ -22,45 +22,45 @@
   width: 450px;
 }
 
-.signIn__container--form {
+.signInContainerForm {
   display: flex;
   flex-direction: column;
 }
 
-.signIn__container--form label {
+.signInContainerForm label {
   font-size: 14px;
 }
 
-.signIn__container--forgot-password {
+.signInContainerForgotPassword {
   color: #ffffff;
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
 }
 
-.signIn__container--forgot-password a {
+.signInContainerForgotPassword a {
   color: #ffffff;
   font-size: 14px;
   text-decoration: none;
 }
 
-.signIn__container--forgot-password a:hover {
+.signInContainerForgotPassword a:hover {
   text-decoration: underline;
 }
 
-.signIn__container--social-media > div {
+.signInContainerSocialMedia > div {
   align-items: center;
   display: flex;
   font-size: 14px;
   margin-bottom: 10px;
 }
 
-.signIn__container--social-media > div > img {
+.signInContainerSocialMedia > div > img {
   margin-right: 10px;
   width: 30px;
 }
 
-.signIn__container--social-media > div {
+.signInContainerSocialMedia > div {
   & > a {
     color: #ffffff;
     text-decoration: none;
@@ -71,19 +71,19 @@
   }
 }
 
-.signIn__container--signUp {
+.signInContainerSignUp {
   font-size: 14px;
   text-align: center;
 }
 
-.signIn__container--signUp a {
+.signInContainerSignUp a {
   color: #ffffff;
   font-weight: bold;
   font-size: 16px;
   text-decoration: none;
 }
 
-.signIn__container--signUp a:hover {
+.signInContainerSignUp a:hover {
   text-decoration: underline;
 }
 
@@ -102,12 +102,12 @@
   color: #ffffff;
 }
 
-.input__error p{
+.inputError p{
   color: #c53030;
   font-weight: bold;
 }
 
-::placeholder {
+.input ::placeholder {
   color: #ffffff;
 }
 
@@ -126,7 +126,7 @@
 }
 
 @media only screen and (max-width: 600px) {
-  .signIn__container {
+  .signInContainer {
     background-color: transparent;
     border: none;
     padding: 0px;

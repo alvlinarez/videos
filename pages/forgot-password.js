@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import Link from 'next/link';
 
 // Form
 import { useFormik } from 'formik';
@@ -7,8 +7,7 @@ import * as yup from 'yup';
 // Components
 import Header from '../components/Header';
 import Spinner from '../components/Spinner';
-import '../styles/containers/ForgotPassword.scss';
-import { axiosClient } from '../config/axios';
+import forgotPasswordStyles from '../styles/containers/ForgotPassword.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { forgotPasswordAction } from '../actions/authActions';
 import { useRouter } from 'next/router';
@@ -33,16 +32,16 @@ const ForgotPassword = () => {
   });
 
   // If user is already signed in
-  const isAuth = useSelector((state) => state.auth.isAuth);
-  if (isAuth) {
-    return <Redirect to={'/'} />;
-  }
+  // const isAuth = useSelector((state) => state.auth.isAuth);
+  // if (isAuth) {
+  //   return <Redirect to={'/'} />;
+  // }
 
   return (
     <>
       <Header authBackgroundColor />
-      <section className="forgotPassword">
-        <section className="forgotPassword__container">
+      <section className={`${forgotPasswordStyles.forgotPassword}`}>
+        <section className={`${forgotPasswordStyles.forgotPasswordContainer}`}>
           {message ? (
             <>
               <h3>{message}</h3>
@@ -51,7 +50,7 @@ const ForgotPassword = () => {
             <>
               <h2>Forgot Password</h2>
               <form
-                className="forgotPassword__container--form"
+                className={`${forgotPasswordStyles.forgotPasswordContainerForm}`}
                 onSubmit={formik.handleSubmit}
               >
                 <input
@@ -71,7 +70,9 @@ const ForgotPassword = () => {
                 )}
                 {error && (
                   // show api errors
-                  <div className="input__error">
+                  <div
+                    className={`${forgotPasswordStyles.forgotPasswordContainerFormError}`}
+                  >
                     <p>{error}</p>
                   </div>
                 )}

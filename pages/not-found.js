@@ -1,15 +1,15 @@
 import React from 'react';
-import '../styles/components/NotFound.scss';
+import notFoundStyles from '../styles/components/notFound.module.scss';
 
 const NotFound = () => {
   return (
     <>
-      <section className="main-404">
-        <div className="main-404__container">
-          <div className="main-404__container--title">
-            <h2 className="pulse">404</h2>
+      <section className={`${notFoundStyles.main404}`}>
+        <div className={`${notFoundStyles.main404Container}`}>
+          <div className={`${notFoundStyles.main404ContainerTitle}`}>
+            <h2 className={`${notFoundStyles.pulse}`}>404</h2>
           </div>
-          <div className="main-404__container--subtitle">
+          <div className={`${notFoundStyles.pulse}`}>
             <p>Page Not Found</p>
           </div>
         </div>

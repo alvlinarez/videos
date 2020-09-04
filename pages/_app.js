@@ -6,15 +6,21 @@ import { axiosClient } from '../config/axios';
 import { redirectUser } from '../routes/redirectUser';
 import NotFound from './not-found';
 
+import '../styles/App.scss';
+import '../styles/Media.scss';
+import '../styles/Vars.scss';
+
 import '../styles/swiper/swiper.scss';
 import '../styles/swiper/scrollbar/scrollbar.scss';
+import '../styles/components/Carousel.scss';
+import { getToken } from '../utils/getToken';
 
 const MyApp = ({ Component, pageProps }) => {
   const { user, error } = pageProps;
   if (error) {
     return <NotFound error={error} />;
   }
-  return <Component user={user} {...pageProps} />;
+  return <Component {...pageProps} />;
 };
 
 MyApp.getInitialProps = async (appContext) => {

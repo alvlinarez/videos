@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import Link from 'next/link';
 
 // Form
 import { useFormik } from 'formik';
@@ -7,7 +7,8 @@ import * as yup from 'yup';
 // Components
 import Header from '../components/Header';
 import Spinner from '../components/Spinner';
-import '../styles/containers/ForgotPassword.scss';
+import forgotPasswordStyles from '../styles/containers/ForgotPassword.module.scss';
+import signInStyles from '../styles/containers/SignIn.module.scss';
 import useDecodeToken from '../hooks/useDecodeToken';
 import queryString from 'query-string';
 import { useDispatch, useSelector } from 'react-redux';
@@ -57,8 +58,8 @@ const ResetPassword = (props) => {
   return (
     <>
       <Header authBackgroundColor />
-      <section className="forgotPassword">
-        <section className="forgotPassword__container">
+      <section className={`${forgotPasswordStyles.forgotPassword}`}>
+        <section className={`${forgotPasswordStyles.forgotPasswordContainer}`}>
           {message ? (
             <>
               <h3>{message}</h3>
@@ -67,12 +68,12 @@ const ResetPassword = (props) => {
             <>
               <h2>Hey {name}, type your new password</h2>
               <form
-                className="forgotPassword__container--form"
+                className={`${forgotPasswordStyles.forgotPasswordContainerForm}`}
                 onSubmit={formik.handleSubmit}
               >
                 <input
                   name="password"
-                  className="input"
+                  className={`${signInStyles.input}`}
                   type="password"
                   placeholder="New Password"
                   value={formik.values.password}
@@ -81,13 +82,13 @@ const ResetPassword = (props) => {
                   disabled={message || false}
                 />
                 {formik.touched.password && formik.errors.password && (
-                  <div className="input__error">
+                  <div className={`${signInStyles.inputError}`}>
                     <p>{formik.errors.password}</p>
                   </div>
                 )}
                 {error && (
                   // show api errors
-                  <div className="input__error">
+                  <div className={`${signInStyles.inputError}`}>
                     <p>{error}</p>
                   </div>
                 )}

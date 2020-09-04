@@ -8,11 +8,11 @@ video {
   left: 0;
 }
 
-video:hover .Player-back {
+video:hover .playerBack {
   display: block;
 }
 
-.player-spinner__container {
+.playerSpinnerContainer {
   position: absolute;
   height: 100vh;
   background-color: #000;
@@ -21,14 +21,14 @@ video:hover .Player-back {
   place-items: center
 }
 
-.Player-back {
+.playerBack {
   position: fixed;
   top: 5px;
   left: 5px;
   font-size: 12px;
 }
 
-.Player-back button {
+.playerBack button {
   text-decoration: none;
   color: white;
   background: rgba(0, 0, 0, .3);

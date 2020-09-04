@@ -1,11 +1,13 @@
 import React from 'react';
-import '../styles/components/Categories.scss';
+import categoriesStyles from '../styles/components/Categories.module.scss';
 
 const Categories = ({ children, title }) => {
   return (
-    <section className="categories">
-      <div className="categories-container">
-        <h3 className="categories-container__title">{title}</h3>
+    <section className={`${categoriesStyles.categories}`}>
+      <div className={`${categoriesStyles.categoriesContainer}`}>
+        <h3 className={`${categoriesStyles.categoriesContainerTitle}`}>
+          {title}
+        </h3>
         {children}
       </div>
     </section>

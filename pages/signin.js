@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 // Dispatch
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,7 +12,7 @@ import * as yup from 'yup';
 // Components
 import Header from '../components/Header';
 import Spinner from '../components/Spinner';
-import '../styles/components/SignIn.scss';
+import signInStyles from '../styles/containers/SignIn.module.scss';
 
 const SignIn = () => {
   const router = useRouter();
@@ -38,24 +37,24 @@ const SignIn = () => {
   });
 
   // If user is already signed in
-  const isAuth = useSelector((state) => state.auth.isAuth);
-  if (isAuth) {
-    return <Redirect to={'/'} />;
-  }
+  // const isAuth = useSelector((state) => state.auth.isAuth);
+  // if (isAuth) {
+  //   return <Redirect to={'/'} />;
+  // }
 
   return (
     <>
       <Header authBackgroundColor />
-      <section className="signIn">
-        <section className="signIn__container">
+      <section className={`${signInStyles.signIn}`}>
+        <section className={`${signInStyles.signInContainer}`}>
           <h2>Sign In</h2>
           <form
-            className="signIn__container--form"
+            className={`${signInStyles.signInContainerForm}`}
             onSubmit={formik.handleSubmit}
           >
             <input
               name="email"
-              className="input"
+              className={`${signInStyles.input}`}
               type="text"
               placeholder="Email"
               onChange={formik.handleChange}
@@ -63,13 +62,13 @@ const SignIn = () => {
               value={formik.values.email}
             />
             {formik.touched.email && formik.errors.email && (
-              <div className="input__error">
+              <div className={`${signInStyles.inputError}`}>
                 <p>{formik.errors.email}</p>
               </div>
             )}
             <input
               name="password"
-              className="input"
+              className={`${signInStyles.input}`}
               type="password"
               placeholder="Password"
               onChange={formik.handleChange}
@@ -77,28 +76,30 @@ const SignIn = () => {
               value={formik.values.password}
             />
             {formik.touched.password && formik.errors.password && (
-              <div className="input__error">
+              <div className={`${signInStyles.inputError}`}>
                 <p>{formik.errors.password}</p>
               </div>
             )}
             {error && (
               // show api errors
-              <div className="input__error">
+              <div className={`${signInStyles.inputError}`}>
                 <p>{error}</p>
               </div>
             )}
             {loading ? (
               <Spinner />
             ) : (
-              <button className="button" type="submit">
+              <button className={`${signInStyles.button}`} type="submit">
                 Sign In
               </button>
             )}
-            <div className="signIn__container--forgot-password">
-              <Link to="/auth/forgot-password">Forgot your password?</Link>
+            <div className={`${signInStyles.signInContainerForgotPassword}`}>
+              <Link href="/auth/forgot-password">
+                <a>Forgot your password?</a>
+              </Link>
             </div>
           </form>
-          <section className="signIn__container--social-media">
+          <section className={`${signInStyles.signInContainerSocialMedia}`}>
             <div>
               <img src="/static/google-icon.png" alt="Google-Icon" />
               <a href="/auth/google">Sign In with Google</a>
@@ -108,8 +109,11 @@ const SignIn = () => {
               <a href="/auth/facebook">Sign In with Facebook</a>
             </div>
           </section>
-          <p className="signIn__container--signUp">
-            Don&apos;t you have an account? <Link to="/signup">Sign Up</Link>
+          <p className={`${signInStyles.signInContainerSignUp}`}>
+            Don&apos;t you have an account?{' '}
+            <Link href="/signup">
+              <a>Sign Up</a>
+            </Link>
           </p>
         </section>
       </section>
