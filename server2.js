@@ -67,99 +67,129 @@ const setResponse = (html, preloadedState, manifest) => {
 
 const renderApp = async (req, res) => {
   let initialState = {
+    auth: {
+      user: {},
+      authLoading: true,
+      error: null,
+      isAuth: false,
+      loading: false,
+      message: null
+    },
+    movies: {
+      error: null,
+      loading: true,
+      mostWatched: null,
+      movies: null,
+      originals: null,
+      playing: {}
+    },
+    playlist: {
+      error: null,
+      loading: false,
+      playlist: null
+    },
     search: {
       error: null,
       loading: false,
       search: null
     }
   };
-  const { email, name, id } = req.cookies;
-  try {
-    let movies = await axiosClient().get('movies');
-    movies = movies.data;
-    const originals = movies.filter((movie) => movie.original);
-    // Get first 7 most watched movies
-    const mostWatched = [
-      ...movies
-        .sort(function compare(a, b) {
-          if (a.timesWatched < b.timesWatched) {
-            return 1;
-          }
-          if (a.timesWatched > b.timesWatched) {
-            return -1;
-          }
-          return 0;
-        })
-        .slice(0, 7)
-    ];
+  if (req.cookies.token) {
+    try {
+      let user = await axiosClient().get('auth/user');
+      user = data.user;
+      let movies = await axiosClient().get('movies');
+      movies = movies.data;
+      const originals = movies.filter((movie) => movie.original);
+      // Get first 7 most watched movies
+      const mostWatched = [
+        ...movies
+          .sort(function compare(a, b) {
+            if (a.timesWatched < b.timesWatched) {
+              return 1;
+            }
+            if (a.timesWatched > b.timesWatched) {
+              return -1;
+            }
+            return 0;
+          })
+          .slice(0, 7)
+      ];
 
-    let playlist = await axiosClient().get('playlists/byUser');
-    playlist = playlist.data.movies;
-    initialState = {
-      ...initialState,
-      auth: {
-        user: {
-          id,
-          name,
-          email
+      let playlist = await axiosClient().get('playlists/byUser');
+      playlist = playlist.data.movies;
+      initialState = {
+        ...initialState,
+        auth: {
+          user,
+          authLoading: true,
+          error: null,
+          isAuth: true,
+          loading: false,
+          message: null
         },
-        authLoading: true,
-        error: null,
-        isAuth: true,
-        loading: false,
-        message: null
-      },
-      movies: {
-        error: null,
-        loading: true,
-        mostWatched,
-        movies,
-        originals,
-        playing: {}
-      },
-      playlist: {
-        error: null,
-        loading: false,
-        playlist
-      }
-    };
-  } catch (e) {
-    initialState = {
-      ...initialState,
-      auth: {
-        user: {},
-        authLoading: true,
-        error: null,
-        isAuth: false,
-        loading: false,
-        message: null
-      },
-      movies: {
-        error: null,
-        loading: true,
-        mostWatched: null,
-        movies: null,
-        originals: null,
-        playing: {}
-      },
-      playlist: {
-        error: null,
-        loading: false,
-        playlist: null
-      }
-    };
+        movies: {
+          error: null,
+          loading: true,
+          mostWatched,
+          movies,
+          originals,
+          playing: {}
+        },
+        playlist: {
+          error: null,
+          loading: false,
+          playlist
+        }
+      };
+    } catch (e) {
+      initialState = {
+        ...initialState,
+        auth: {
+          user: {},
+          authLoading: true,
+          error: null,
+          isAuth: false,
+          loading: false,
+          message: null
+        },
+        movies: {
+          error: null,
+          loading: true,
+          mostWatched: null,
+          movies: null,
+          originals: null,
+          playing: {}
+        },
+        playlist: {
+          error: null,
+          loading: false,
+          playlist: null
+        }
+      };
+    }
   }
 
   const store = createStore(reducer, initialState);
   const preloadedState = store.getState();
+  const context = {};
+
   const html = renderToString(
     <Provider store={store}>
-      <StaticRouter location={req.url} context={{}}>
+      <StaticRouter location={req.url} context={context}>
         <App />
       </StaticRouter>
     </Provider>
   );
-  res.send(setResponse(html, preloadedState, req.hashManifest));
+
+  if (context.url) {
+    res.writeHead(301, {
+      Location: context.url
+    });
+    res.end();
+  } else {
+    res.send(setResponse(html, preloadedState, req.hashManifest));
+  }
 };
 
 require('./server/strategies/google');

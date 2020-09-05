@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = function (_env, argv) {
   const isProduction = argv.mode === 'production';
@@ -99,6 +100,29 @@ module.exports = function (_env, argv) {
         template: path.resolve(__dirname, 'public/index.html'),
         inject: true,
         favicon: 'public/logo.ico'
+      }),
+      new WorkboxPlugin.GenerateSW({
+        // Do not precache images
+        exclude: [/\.(?:png|jpg|jpeg|svg)$/],
+        runtimeCaching: [
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images',
+              expiration: {
+                maxEntries: 10
+              }
+            }
+          },
+          {
+            urlPattern: new RegExp('https://(aws-alg-drive.s3.amazonaws.com)'),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images'
+            }
+          }
+        ]
       })
     ].filter(Boolean),
     optimization: {
@@ -130,8 +154,12 @@ module.exports = function (_env, argv) {
           vendors: {
             test(module, chunks) {
               const name = module.nameForCondition && module.nameForCondition();
-              return chunks.some((chunk) => chunk.name !== 'vendors' && /[\\/]node_modules[\\/]/.test(name));
-            },
+              return chunks.some(
+                (chunk) =>
+                  chunk.name !== 'vendors' &&
+                  /[\\/]node_modules[\\/]/.test(name)
+              );
+            }
             // test: /[\\/]node_modules[\\/]/,
             // name(module, chunks, cacheGroupKey) {
             //   const packageName = module.context.match(
