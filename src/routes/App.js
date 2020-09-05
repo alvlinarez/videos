@@ -25,7 +25,7 @@ export const App = () => {
     dispatch(getAuthenticatedUser());
   }, []);
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
       {authLoading ? (
         <RootLoader />
@@ -64,6 +64,6 @@ export const App = () => {
           </Switch>
         </Layout>
       )}
-    </BrowserRouter>
+    </>
   );
 };
