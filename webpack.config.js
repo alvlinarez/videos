@@ -64,7 +64,7 @@ module.exports = function (_env, argv) {
           use: {
             loader: 'url-loader',
             options: {
-              limit: 8192,
+              limit: false,
               name: 'static/media/[name].[hash:8].[ext]'
             }
           }
@@ -96,11 +96,11 @@ module.exports = function (_env, argv) {
           isProduction ? 'production' : 'development'
         )
       }),
-      new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, 'public/index.html'),
-        inject: true,
-        favicon: 'public/logo.ico'
-      }),
+      // new HtmlWebpackPlugin({
+      //   template: path.resolve(__dirname, 'public/index.html'),
+      //   inject: true,
+      //   favicon: 'public/logo.ico'
+      // }),
       new WorkboxPlugin.GenerateSW({
         // Do not precache images
         exclude: [/\.(?:png|jpg|jpeg|svg)$/],
@@ -147,11 +147,15 @@ module.exports = function (_env, argv) {
       ],
       splitChunks: {
         chunks: 'all',
-        minSize: 0,
-        maxInitialRequests: 20,
-        maxAsyncRequests: 20,
+        // minSize: 0,
+        // maxInitialRequests: 20,
+        // maxAsyncRequests: 20,
         cacheGroups: {
           vendors: {
+            name: 'vendors',
+            reuseExistingChunk: true,
+            priority: 1,
+            enforce: true,
             test(module, chunks) {
               const name = module.nameForCondition && module.nameForCondition();
               return chunks.some(
@@ -167,14 +171,13 @@ module.exports = function (_env, argv) {
             //   )[1];
             //   return `${cacheGroupKey}.${packageName.replace('@', '')}`;
             // }
-          },
-          common: {
-            minChunks: 2,
-            priority: -10
           }
+          // common: {
+          //   minChunks: 2,
+          //   priority: -10
+          // }
         }
-      },
-      runtimeChunk: 'single'
+      }
     },
     devServer: {
       compress: true,

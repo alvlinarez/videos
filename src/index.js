@@ -21,14 +21,14 @@ delete window.__PRELOADED_STATE__;
 ReactDOM.hydrate(
   <BrowserRouter>
     <Provider store={store}>
-      <App />
+      <App isAuth={preloadedState.auth.isAuth} />
     </Provider>
   </BrowserRouter>,
   document.getElementById('app')
 );
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js');
-  });
-}
+// if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', () => {
+//     navigator.serviceWorker.register('/service-worker.js');
+//   });
+// }

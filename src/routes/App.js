@@ -17,53 +17,50 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAuthenticatedUser } from '../actions/authActions';
 import RootLoader from '../components/RootLoader';
 
-export const App = () => {
-  const dispatch = useDispatch();
-  const isAuth = useSelector((state) => state.auth.isAuth);
-  const authLoading = useSelector((state) => state.auth.authLoading);
-  useEffect(() => {
-    dispatch(getAuthenticatedUser());
-  }, []);
+export const App = ({ isAuth }) => {
+  //const dispatch = useDispatch();
+  //const isAuth = useSelector((state) => state.auth.isAuth);
+  //const authLoading = useSelector((state) => state.auth.authLoading);
+  // useEffect(() => {
+  //   dispatch(getAuthenticatedUser());
+  // }, []);
   return (
     <>
       <ScrollToTop />
-      {authLoading ? (
-        <RootLoader />
-      ) : (
-        <Layout>
-          <Switch>
-            <Route exact path="/signin" component={SignIn} />
-            <Route exact path="/signup" component={SignUp} />
-            <Route
-              exact
-              path={[
-                '/auth/account-activation',
-                '/auth/account-activation/verify'
-              ]}
-              component={AccountActivation}
-            />
-            <Route
-              exact
-              path="/auth/forgot-password"
-              component={ForgotPassword}
-            />
-            <Route
-              exact
-              path="/auth/reset-password"
-              component={ResetPassword}
-            />
-            <Route exact path="/404" component={NotFound} />
-            <AuthenticatedRoutes auth={isAuth}>
-              <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/player/:id" component={Player} />
-                <Route exact path="/search" component={Search} />
-                <Route component={NotFound} />
-              </Switch>
-            </AuthenticatedRoutes>
-          </Switch>
-        </Layout>
-      )}
+      {/*{authLoading ? (*/}
+      {/*  <RootLoader />*/}
+      {/*) : (*/}
+      <Layout>
+        <Switch>
+          <Route exact path="/signin" component={SignIn} />
+          <Route exact path="/signup" component={SignUp} />
+          <Route
+            exact
+            path={[
+              '/auth/account-activation',
+              '/auth/account-activation/verify'
+            ]}
+            component={AccountActivation}
+          />
+          <Route
+            exact
+            path="/auth/forgot-password"
+            component={ForgotPassword}
+          />
+          <Route exact path="/auth/reset-password" component={ResetPassword} />
+          <Route exact path="/404" component={NotFound} />
+
+          <AuthenticatedRoutes auth={isAuth}>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/player/:id" component={Player} />
+              <Route exact path="/search" component={Search} />
+              <Route component={NotFound} />
+            </Switch>
+          </AuthenticatedRoutes>
+        </Switch>
+      </Layout>
+      {/*)}*/}
     </>
   );
 };

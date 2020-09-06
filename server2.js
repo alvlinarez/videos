@@ -16,6 +16,8 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import { StaticRouter } from 'react-router-dom';
 import { App } from './src/routes/App';
+import { renderRoutes } from 'react-router-config';
+import serverRoutes from './src/routes/serverRoutes';
 
 const app = express();
 
@@ -49,6 +51,8 @@ const setResponse = (html, preloadedState, manifest) => {
           <link rel="preconnect" href="https://aws-alg-drive.s3.amazonaws.com" />
           <link rel="preconnect" href="http://localhost:5000" />
           <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta name="description" content="Website to watch movies and save playlists. Made with MERN">
           <title>Videos</title>
       </head>
       <body>
@@ -68,12 +72,12 @@ const setResponse = (html, preloadedState, manifest) => {
 const renderApp = async (req, res) => {
   let initialState = {
     auth: {
-      user: {},
       authLoading: true,
       error: null,
       isAuth: false,
       loading: false,
-      message: null
+      message: null,
+      user: {}
     },
     movies: {
       error: null,
@@ -95,10 +99,13 @@ const renderApp = async (req, res) => {
     }
   };
   if (req.cookies.token) {
+    const { token } = req.cookies;
     try {
-      let user = await axiosClient().get('auth/user');
-      user = data.user;
-      let movies = await axiosClient().get('movies');
+      let user = await axiosClient().post('auth', {
+        token
+      });
+      user = user.data;
+      let movies = await axiosClient().post('moviesSsr', { token });
       movies = movies.data;
       const originals = movies.filter((movie) => movie.original);
       // Get first 7 most watched movies
@@ -116,7 +123,7 @@ const renderApp = async (req, res) => {
           .slice(0, 7)
       ];
 
-      let playlist = await axiosClient().get('playlists/byUser');
+      let playlist = await axiosClient().post('playlists/byUserSsr', { token });
       playlist = playlist.data.movies;
       initialState = {
         ...initialState,
@@ -146,12 +153,12 @@ const renderApp = async (req, res) => {
       initialState = {
         ...initialState,
         auth: {
-          user: {},
           authLoading: true,
           error: null,
           isAuth: false,
           loading: false,
-          message: null
+          message: null,
+          user: {}
         },
         movies: {
           error: null,
@@ -173,82 +180,76 @@ const renderApp = async (req, res) => {
   const store = createStore(reducer, initialState);
   const preloadedState = store.getState();
   const context = {};
-
   const html = renderToString(
     <Provider store={store}>
       <StaticRouter location={req.url} context={context}>
-        <App />
+        {renderRoutes(serverRoutes(initialState.auth.isAuth))}
+        {/*<App isAuth={initialState.auth.isAuth} />*/}
       </StaticRouter>
     </Provider>
   );
 
-  if (context.url) {
-    res.writeHead(301, {
-      Location: context.url
-    });
-    res.end();
-  } else {
-    res.send(setResponse(html, preloadedState, req.hashManifest));
-  }
+  res.send(setResponse(html, preloadedState, req.hashManifest));
 };
 
-require('./server/strategies/google');
-app.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['email', 'profile', 'openid'] })
-);
+app.get('*', renderApp);
 
-app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', { session: false }),
-  (req, res) => {
-    if (!req.user) {
-      return res.status(401).json({
-        error: `Error signing in with Google`
-      });
-    }
-    const { token } = req.user;
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: false
-    });
-    return res.redirect('/');
-  }
-);
-
-require('./server/strategies/facebook');
-app.get(
-  '/auth/facebook',
-  passport.authenticate('facebook', { scope: ['email'] })
-);
-
-app.get(
-  '/auth/facebook/callback',
-  passport.authenticate('facebook', { session: false }),
-  (req, res) => {
-    if (!req.user) {
-      return res.status(401).json({
-        error: `Error signing in with Facebook`
-      });
-    }
-    const { token } = req.user;
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: false
-    });
-    return res.redirect('/');
-  }
-);
+// require('./server/strategies/google');
+// app.get(
+//   '/auth/google',
+//   passport.authenticate('google', { scope: ['email', 'profile', 'openid'] })
+// );
+//
+// app.get(
+//   '/auth/google/callback',
+//   passport.authenticate('google', { session: false }),
+//   (req, res) => {
+//     if (!req.user) {
+//       return res.status(401).json({
+//         error: `Error signing in with Google`
+//       });
+//     }
+//     const { token } = req.user;
+//     res.cookie('token', token, {
+//       httpOnly: true,
+//       secure: false
+//     });
+//     return res.redirect('/');
+//   }
+// );
+//
+// require('./server/strategies/facebook');
+// app.get(
+//   '/auth/facebook',
+//   passport.authenticate('facebook', { scope: ['email'] })
+// );
+//
+// app.get(
+//   '/auth/facebook/callback',
+//   passport.authenticate('facebook', { session: false }),
+//   (req, res) => {
+//     if (!req.user) {
+//       return res.status(401).json({
+//         error: `Error signing in with Facebook`
+//       });
+//     }
+//     const { token } = req.user;
+//     res.cookie('token', token, {
+//       httpOnly: true,
+//       secure: false
+//     });
+//     return res.redirect('/');
+//   }
+// );
 
 // app.get('*', function (req, res) {
 //   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 // });
 
-app.get('*', renderApp);
+// app.get('*', renderApp);
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  getManifest();
   console.log(`App is running on port ${PORT}`);
 });
