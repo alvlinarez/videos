@@ -34,9 +34,7 @@ const Header = (props) => {
               <a href="/">{user.name}</a>
             </li>
             <li>
-              <Link to="#logout" onClick={handleSignOut}>
-                Sign Out
-              </Link>
+              <a onClick={handleSignOut}>Sign Out</a>
             </li>
           </ul>
         </div>

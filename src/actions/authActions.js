@@ -50,7 +50,8 @@ export const signInAction = ({ email, password }, history) => {
           type: SIGN_IN_SUCCESS,
           payload: data
         });
-        history.push('/');
+        //history.push('/');
+        window.location.href = '/';
       }
     } catch (e) {
       dispatch({
@@ -252,6 +253,7 @@ export const signOutAction = () => {
           type: RESET_SEARCH_STATE
         });
         removeLocalstorage('authBackground');
+        window.location.href = '/signin';
       } else {
         dispatch({
           type: SIGN_OUT_ERROR,
