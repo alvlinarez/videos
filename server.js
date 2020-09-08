@@ -1,3 +1,5 @@
+import { createStore } from 'redux';
+
 const express = require('express');
 const compression = require('compression');
 const passport = require('passport');
@@ -5,14 +7,91 @@ const cors = require('cors');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const { getManifest } = require('./server/getManifest');
+
+import reducer from './src/reducers';
+import {
+  renderToString,
+  renderToNodeStream,
+  renderToStaticNodeStream
+} from 'react-dom/server';
+import { Provider } from 'react-redux';
+import React from 'react';
+import { StaticRouter } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
+import serverRoutes from './src/routes/serverRoutes';
+import { getInitialState } from './server/initialState';
+
 const app = express();
 
-app.use(cors());
-//app.use(helmet());
+app.use(express.json());
 app.use(compression());
 app.use(cookieParser());
+app.use(cors());
+//app.use(helmet());
+//app.use(helmet.permittedCrossDomainPolicies());
+
+app.use((req, res, next) => {
+  if (!req.hashManifest) {
+    req.hashManifest = getManifest();
+  }
+  next();
+});
+
 // serving static build file that it will be built with npm run build
 app.use(express.static(path.join(__dirname, 'dist')));
+
+const setResponse = (html, preloadedState, manifest) => {
+  const mainStyles = manifest && manifest['main.css'];
+  const mainBuild = manifest && manifest['main.js'];
+  const vendorBuild = manifest && manifest['vendors.js'];
+
+  return `
+    <!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <link rel="stylesheet" href="${mainStyles}" type="text/css" media="all" aria-disabled="false"/>
+          <link rel="preconnect" href="https://aws-alg-drive.s3.amazonaws.com" />
+          <link rel="preconnect" href="http://localhost:5000" />
+          <link rel="icon" type="image/x-icon" href="https://aws-alg-drive.s3.amazonaws.com/videos-logo.ico">
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta name="description" content="Website to watch movies and save playlists. Made with MERN">
+          <title>Videos</title>
+      </head>
+      <body>
+          <div id="app">${html}</div>
+          <script type="text/javascript">
+            window.__PRELOADED_STATE__ = ${JSON.stringify(
+              preloadedState
+            ).replace(/</g, '\\u003c')}
+           </script>
+          <script src="${mainBuild}" type="text/javascript"></script>
+          <script src="${vendorBuild}" type="text/javascript"></script>
+      </body>
+      </html>
+  `;
+};
+
+const renderApp = async (req, res) => {
+  let initialState = await getInitialState(req.cookies.token);
+
+  const store = createStore(reducer, initialState);
+  const preloadedState = store.getState();
+  const context = {};
+  const html = renderToNodeStream(
+    <Provider store={store}>
+      <StaticRouter location={req.url} context={context}>
+        {renderRoutes(serverRoutes(initialState.auth.isAuth))}
+        {/*<App isAuth={initialState.auth.isAuth} />*/}
+      </StaticRouter>
+    </Provider>
+  );
+
+  res.send(setResponse(html, preloadedState, req.hashManifest));
+};
+
+//app.get('*', renderApp);
 
 require('./server/strategies/google');
 app.get(
@@ -62,9 +141,11 @@ app.get(
   }
 );
 
-app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
+// app.get('*', function (req, res) {
+//   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// });
+
+app.get('*', renderApp);
 
 const PORT = process.env.PORT || 3000;
 

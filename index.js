@@ -10,4 +10,4 @@ require('asset-require-hook')({
   name: '/dist/static/media/[name].[hash:8].[ext]'
 });
 
-require('./server2');
+require('./server');

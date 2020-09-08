@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
+    "start": "node index.js",
     "dev": "webpack-dev-server --mode development"
   },
   "repository": {
