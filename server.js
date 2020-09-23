@@ -4,7 +4,6 @@ const express = require('express');
 const compression = require('compression');
 const passport = require('passport');
 const cors = require('cors');
-const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const { getManifest } = require('./server/getManifest');
@@ -28,8 +27,6 @@ app.use(express.json());
 app.use(compression());
 app.use(cookieParser());
 app.use(cors());
-//app.use(helmet());
-//app.use(helmet.permittedCrossDomainPolicies());
 
 app.use((req, res, next) => {
   if (!req.hashManifest) {
@@ -91,8 +88,6 @@ const renderApp = async (req, res) => {
   res.send(setResponse(html, preloadedState, req.hashManifest));
 };
 
-//app.get('*', renderApp);
-
 require('./server/strategies/google');
 app.get(
   '/auth/google',
@@ -140,10 +135,6 @@ app.get(
     return res.redirect('/');
   }
 );
-
-// app.get('*', function (req, res) {
-//   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-// });
 
 app.get('*', renderApp);
 
