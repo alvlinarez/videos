@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -94,6 +95,12 @@ module.exports = function (_env, argv) {
           isProduction ? 'production' : 'development'
         )
       }),
+      isDevelopment &&
+        new HtmlWebpackPlugin({
+          template: path.resolve(__dirname, 'public/index.html'),
+          inject: true,
+          favicon: 'public/videos-logo.ico'
+        })
     ].filter(Boolean),
     optimization: {
       minimize: isProduction,
