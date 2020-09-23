@@ -49,7 +49,7 @@ const setResponse = (html, preloadedState, manifest) => {
       <head>
           <link rel="stylesheet" href="${mainStyles}" type="text/css" media="all" aria-disabled="false"/>
           <link rel="preconnect" href="https://aws-alg-drive.s3.amazonaws.com" />
-          <link rel="preconnect" href="http://localhost:5000" />
+          <link rel="preconnect" href="http://alvlinarez.dev" />
           <link rel="icon" type="image/x-icon" href="https://aws-alg-drive.s3.amazonaws.com/videos-logo.ico">
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
