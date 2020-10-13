@@ -75,7 +75,7 @@ const renderApp = async (req, res) => {
   const store = createStore(reducer, initialState);
   const preloadedState = store.getState();
   const context = {};
-  const html = renderToNodeStream(
+  const html = renderToString(
     <Provider store={store}>
       <StaticRouter location={req.url} context={context}>
         {renderRoutes(serverRoutes(initialState.auth.isAuth))}
