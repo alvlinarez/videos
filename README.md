@@ -11,7 +11,7 @@ Some features used:
 * Server side rendering with React
 
 
-[See app in production](https://alvlinarez.dev)
+[See app in production](https://videos.alvlinarez.dev)
 
 ## Scripts
 

@@ -9,11 +9,7 @@ const path = require('path');
 const { getManifest } = require('./server/getManifest');
 
 import reducer from './src/reducers';
-import {
-  renderToString,
-  renderToNodeStream,
-  renderToStaticNodeStream
-} from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { StaticRouter } from 'react-router-dom';
@@ -79,7 +75,6 @@ const renderApp = async (req, res) => {
     <Provider store={store}>
       <StaticRouter location={req.url} context={context}>
         {renderRoutes(serverRoutes(initialState.auth.isAuth))}
-        {/*<App isAuth={initialState.auth.isAuth} />*/}
       </StaticRouter>
     </Provider>
   );
