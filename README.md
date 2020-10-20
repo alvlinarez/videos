@@ -13,6 +13,8 @@ Some features used:
 
 [See app in production](https://videos.alvlinarez.dev)
 
+[See api](https://github.com/alvlinarez/videos-server)
+
 ## Scripts
 
 * `npm install` to install dependencies
